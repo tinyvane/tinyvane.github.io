@@ -76,10 +76,12 @@ deploy:
   repo: git@github1:tinyvane/tinyvane.github.io.git
   branch: master
   message: "Github Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
- 
-  ## repo: 
-  ## repository: git@github.com:tinyvane/tinyvane.github.io.git
-  ## branch: master
+
+- type: git 
+  repo: git@codingtinyvane:tinyvane/tinyvane.coding.git
+  branch: master
+  message: "Coding.net Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+
   ## repository: 
     ## github: git@github.com:tinyvane/tinyvane.github.io.git
     ## coding: git@git.coding.net:tinyvane/tinyvane.git
