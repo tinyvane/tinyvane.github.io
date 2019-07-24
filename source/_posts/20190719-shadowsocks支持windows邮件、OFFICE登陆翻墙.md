@@ -40,6 +40,6 @@ pause
 
 ## 参考链接
 
-1. [参考链接](http://www.wuliaole.com)
+1. [参考链接](https://github.com/shadowsocks/shadowsocks-windows/issues/897)
 2. [参考链接](http://www.wuliaole.com)
 3. [参考链接](http://www.wuliaole.com)
