@@ -4,7 +4,7 @@
 
 # Site
 title: 无聊小博
-subtitle: Keep sharp
+subtitle: Keep studying
 description: 随笔 随心
 author: 节约用爱
 language: zh-Hans
@@ -37,7 +37,7 @@ external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
-relative_link: false
+relative_link: true
 future: true
 highlight:
   enable: true
