@@ -20,23 +20,23 @@ urlname: newbee_to_visual_studio_for_mac
 
 VS for Mac 软件[下载地址](https://www.visualstudio.com/vs/visual-studio-mac/)
 
-![VS for Mac 正式版下载](vsformac1.png)
+![VS for Mac 正式版下载](20170414-Visual-Studio-for-Mac-安装过程/vsformac1.png)
 
 下载后，运行
 
-![VS for mac 安装界面](vsformac2.png)
+![VS for mac 安装界面](20170414-Visual-Studio-for-Mac-安装过程/vsformac2.png)
 
 这次的界面和预览版有所改变，第一次安装，全都选中。
 
-![](vsformac3.png)
+![](20170414-Visual-Studio-for-Mac-安装过程/vsformac3.png)
 
 失败了几次，都卡在了Android SDK上，无意中某次重装，发现安装器还发现了.Net Core，后来再安装就没有了，这正式版也是不太靠谱。
 
-![VS for mac 出现.net core项目](vsformac5.png)
+![VS for mac 出现.net core项目](20170414-Visual-Studio-for-Mac-安装过程/vsformac5.png)
 
 如果安装失败了，点击退出，安装器会提示保存进度，这个功能说好也不好，说好是因为下次重装不用下载2G多内容了，不好的呢？如果你决定放弃安装，占了N多硬盘，你还不知道该怎么清理。
 
-![VS for mac安装器在退出时会保存已经安装进度](vsformac4.png)
+![VS for mac安装器在退出时会保存已经安装进度](20170414-Visual-Studio-for-Mac-安装过程/vsformac4.png)
 
 ## 通过控制台查看具体失败信息
 
@@ -71,7 +71,7 @@ VS for Mac 软件[下载地址](https://www.visualstudio.com/vs/visual-studio-ma
 
 最终确定了几个无法下载的软件，可以手动下载，也可以在失败界面，查看失败安装说明，会有详细的安装提示，我就是通过这个提示安装成功的。见图如下。
 
-![VS for MAC 失败安装说明](vsformac10.png)
+![VS for MAC 失败安装说明](20170414-Visual-Studio-for-Mac-安装过程/vsformac10.png)
 
 > 说一点题外话，某次安装过程，提示VS for MAC要求将XCODE升级到8.3版本之上。我其实也想升级，无奈8.3的XCODE要求MAC OS对低10.12(sierra)，而我是EI CAPITAN（10.11），如果升级到10.12之后，KARABINER就无法使用了，日本键盘序列的我伤不起啊。
 
@@ -82,7 +82,7 @@ VS for Mac 软件[下载地址](https://www.visualstudio.com/vs/visual-studio-ma
 ## 失败组件的安装
 通过手动安装说明，我下载这6个文件。
 
-![VS for MAC 缺少的组件](vsformac11.png)
+![VS for MAC 缺少的组件](20170414-Visual-Studio-for-Mac-安装过程/vsformac11.png)
 
 其中2个分别是Android SDK和NDK，3个是Xamarin的分别为开发MAC、Android和IOS而必备的组件，还有一个就是Visual Studio for MAC本尊 -_-...
 
@@ -91,23 +91,23 @@ VS for Mac 软件[下载地址](https://www.visualstudio.com/vs/visual-studio-ma
 
 解压缩`android-sdk_r24.4.1-macosx.zip`，得到一个`android-sdk-macoxs`目录，把这个目录移动到`/Users/你的用户名/Library/Developer/Xamarin`目录下，`android-ndk-r14b-darwin-x86_64.zip`也同样解压缩，得到一个`android-ndk`目录，放到同样位置。如下面这样。
 
-![ANDROID SDK MANAGER](vsformac12.png)
+![ANDROID SDK MANAGER](20170414-Visual-Studio-for-Mac-安装过程/vsformac12.png)
 
 然后到`android-sdk-macosx`-`tools`目录下，运行android程序
 
-![ANDROID SDK MANAGER](vsformac6.png)
+![ANDROID SDK MANAGER](20170414-Visual-Studio-for-Mac-安装过程/vsformac6.png)
 
 会打开android sdk manager，程序会自动从GOOGLD读取最新的组件列表。
 
-![ANDROID SDK MANAGER](vsformac7.png)
+![ANDROID SDK MANAGER](20170414-Visual-Studio-for-Mac-安装过程/vsformac7.png)
 
 勾选VS FOR MAC要求的3个组件，安装系统缺少的SDK组件。
 
-![ANDROID SDK MANAGER](vsformac8.png)
+![ANDROID SDK MANAGER](20170414-Visual-Studio-for-Mac-安装过程/vsformac8.png)
 
 确定后，MANAGER会再次确认，要求用户接受每一个软件的安装协议。点击INSTALL按钮。
 
-![ANDROID SDK MANAGER](vsformac9.png)
+![ANDROID SDK MANAGER](20170414-Visual-Studio-for-Mac-安装过程/vsformac9.png)
 
 好了，ANDROID SDK搞定了。
 

@@ -7,7 +7,7 @@ title: 无聊小博
 subtitle: Keep studying
 description: 随笔 随心
 author: 节约用爱
-language: zh-Hans
+language: zh-CN
 timezone: Asia/Hong_Kong
 email: tinyvane@gmail.com
 
@@ -15,7 +15,9 @@ email: tinyvane@gmail.com
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://www.wuliaole.com
 root: /
-permalink: post/:urlname/
+permalink: :year/:month/:day/:urlname/
+#permalink: post/:urlname/
+# permalink: post/:title/
 permalink_defaults:
 # permalink: :year/:month/:day/:title/
 
