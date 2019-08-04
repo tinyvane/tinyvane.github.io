@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>树莓派折腾系列 | 无聊小博</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="树莓派,raspberry,bt sync,花生壳">
+    
+    <meta name="description" content="文章更新 20160526-更新BT SYNC和使用静态IP地址 20160613-更新了使用DNSPOD更新域名A记录的方式更新外网域名访问 20160623-更新挂载硬盘、格式化等方法 20160712-BT SYNC独立成文">
+<meta name="keywords" content="树莓派,raspberry,bt sync,花生壳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派折腾系列">
+<meta property="og:url" content="http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/index.html">
+<meta property="og:site_name" content="无聊小博">
+<meta property="og:description" content="文章更新 20160526-更新BT SYNC和使用静态IP地址 20160613-更新了使用DNSPOD更新域名A记录的方式更新外网域名访问 20160623-更新挂载硬盘、格式化等方法 20160712-BT SYNC独立成文">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/disk-mount.png">
+<meta property="og:updated_time" content="2018-10-11T15:31:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树莓派折腾系列">
+<meta name="twitter:description" content="文章更新 20160526-更新BT SYNC和使用静态IP地址 20160613-更新了使用DNSPOD更新域名A记录的方式更新外网域名访问 20160623-更新挂载硬盘、格式化等方法 20160712-BT SYNC独立成文">
+<meta name="twitter:image" content="http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/disk-mount.png">
+    
+
+    
+        <link rel="alternate" href="/" title="无聊小博" type="application/atom+xml">
+    
+
+    
+
+    <link rel="stylesheet" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="../../../../libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="../../../../css/style.css">
+
+    <script src="../../../../libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="../../../../libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="../../../../libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-144170558-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?0b9af06e21a88c60dc3deb5b699a3e63";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="../../../../index.html" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Keep studying</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../index.html">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/CentOS/">CentOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/基础/">基础</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/MacOS/">MacOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/折腾/">折腾</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/效率/">效率</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/日常使用/">日常使用</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/">树莓派</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/入门/">入门</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/编程/">编程</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '../../../../content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="../../../../js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="../../../../categories/raspberry/">树莓派</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="../../../../categories/raspberry/入门/">入门</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-20160526-树莓派折腾系列" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        树莓派折腾系列
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="" class="article-date">
+            <time datetime="2016-05-25T18:07:20.000Z" itemprop="datePublished">2016-05-26</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="../../../../tags/bt-sync/">bt sync</a>, <a class="tag-link" href="../../../../tags/raspberry/">raspberry</a>, <a class="tag-link" href="../../../../tags/树莓派/">树莓派</a>, <a class="tag-link" href="../../../../tags/花生壳/">花生壳</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="文章更新"><a href="#文章更新" class="headerlink" title="文章更新"></a>文章更新</h2><ol>
+<li>20160526-更新BT SYNC和使用静态IP地址</li>
+<li>20160613-更新了使用DNSPOD更新域名A记录的方式更新外网域名访问</li>
+<li>20160623-更新挂载硬盘、格式化等方法</li>
+<li>20160712-BT SYNC独立成文<a id="more"></a></li>
+</ol>
+<h2 id="折腾1：安装BT-SYNC"><a href="#折腾1：安装BT-SYNC" class="headerlink" title="折腾1：安装BT SYNC"></a>折腾1：安装BT SYNC</h2><p>文章独立分拆，转移到这里→<a href="http://www.wuliaole.com/post/use_bittorrent_to_synchronize_all_files_among_all_terminals_based_on_raspberry_pi">新入口</a></p>
+<h2 id="折腾2：配置公网IP地址（放弃）"><a href="#折腾2：配置公网IP地址（放弃）" class="headerlink" title="折腾2：配置公网IP地址（放弃）"></a>折腾2：配置公网IP地址（放弃）</h2><p>配置过程颇费了一番周折，感觉最有价值的参考文章应该还是<a href="http://demon.tw/hardware/remote-ssh-openwrt.html" target="_blank" rel="noopener">这篇</a>，所以这里为了尊重作者，链接表示感谢。</p>
+<p>自己用的北京联通，虽然拨号会得到公网IP地址，但是每次拨号都会变化，所以需要利用DDNS来将公网域名和内网的IP地址联在一起，看了几个，还是花生壳比较靠谱。</p>
+<h3 id="配置DDNS花生壳"><a href="#配置DDNS花生壳" class="headerlink" title="配置DDNS花生壳"></a>配置DDNS花生壳</h3><p>因为我有了一个OPWENWRT的路由器，所以可以把花生壳安装在路由器上，步骤很简单，关键是免费的树莓派账号需要花6块钱开通一个“内网穿透”的套餐，然后每一个月1G的流量足够了，因为使用来管理的，又不需要通过这个IP地址来发送接收很多的东西。</p>
+<blockquote>
+<p>准确的说，这里说的方法，并不是给树莓派配置花生壳，而是在OP路由器下运行花生壳，让OP路由器拨号的宽带与一个VICP.NET花生壳域名绑定。</p>
+</blockquote>
+<p>首先到花生壳网站上，注册一个免费账号，选一个你喜欢的域名，然后在OP路由器下的-系统-动态DDNS 下开启花生壳，然后应用运行，如果你在其它地方可以ping到你的花生壳域名，并且返回的IP地址，和你在OP路由上获得WAN口IP地址一致，恭喜你，花生壳运行成功了。</p>
+<p>我这里因为用了多拨，虚拟出来了多个WAN口，在OP里，需要指定这个花生壳绑定在哪个具体的WAN口上。</p>
+<p>然后还有重要的一点，就是需要在多拨的负载均衡设置里面，将树莓派的静态IP地址，指定某个WAN口作为流量出入口（这条是否必须有待验证，因为我之前挂赚钱宝的习惯，所以才有了这条）。</p>
+<h3 id="树莓派使用静态IP地址（错误方法）"><a href="#树莓派使用静态IP地址（错误方法）" class="headerlink" title="树莓派使用静态IP地址（错误方法）"></a>树莓派使用静态IP地址（错误方法）</h3><p>这里的方法是错误的，但是我又不忍心删掉了，大家看到的时候，千万记得，这是错的，这是错的，这是错的，重要的事情说三遍。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/network</span><br><span class="line">cp interfaces interfaces.bak <span class="comment">#备份下</span></span><br><span class="line">sudo vim interfaces</span><br></pre></td></tr></table></figure>
+
+<p>奇葩的是，π竟然默认没有安装VIM，用了两下VI，觉得实在是不习惯。</p>
+<p>安装VIM：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>iface eth0 inet dhcp</code> 这句注释掉，然后按照下面的修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.10.173 <span class="comment">#这是我的IP地址，请按照具体情况修改，下同</span></span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.10.1</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">然后删除 `iface default inet dhcp` 行</span><br><span class="line"></span><br><span class="line">否则 ip 是固定的但是无法连外网</span><br><span class="line"></span><br><span class="line">然后重启系统</span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>或者重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service networking restart</span><br></pre></td></tr></table></figure>
+
+<p>如想修改DNS，则需要修改文件 <code>/etc/resolv.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 8.8.4.4</span><br><span class="line">nameserver 208.67.220.220</span><br><span class="line">nameserver 208.67.222.222</span><br><span class="line">nameserver 10.10.10.10</span><br></pre></td></tr></table></figure>
+
+<p>同样也是重启系统或者网络生效。</p>
+<h3 id="树莓派使用静态IP地址（正确方法）"><a href="#树莓派使用静态IP地址（正确方法）" class="headerlink" title="树莓派使用静态IP地址（正确方法）"></a>树莓派使用静态IP地址（正确方法）</h3><p>网上看了一些文章，发现上一小节中的设置方法网上很泛滥，但是实际上却不是最新的方法，在 <code>/etc/network/interfaces</code> 文件中有这么一句话</p>
+<blockquote>
+<p># Please note that this file is written to be used with dhcpcd<br># For static IP, consult /etc/dhcpcd.conf and ‘man dhcpcd.conf’</p>
+</blockquote>
+<p>已经告诉大家interfaces中的设置并不是用来设置静态IP的，所以我又默默的把interfaces文件恢复原状了。</p>
+<p>这个作者在自己的博客上公布了中文版的方法，地址在<a href="http://weibo.com/ttarticle/p/show?id=2309403944574530811762" target="_blank" rel="noopener">这里</a></p>
+<p>我顺便总结一下</p>
+<p>在<code>/etc/dhcpcd.conf</code>文件后面增加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">interface eth0</span><br><span class="line">static ip_address=192.168.10.173/24</span><br><span class="line">static router=192.168.10.1</span><br><span class="line">static gateway=192.168.10.1</span><br><span class="line">static domain_name_servers=192.168.10.1</span><br></pre></td></tr></table></figure>
+
+<p>这里eth0代表板子上的RJ45口的地址</p>
+<p>这里要注意 ip地址要根据自己的子网掩码改 而且后面的”/24”也别落下(开始我觉得没用去掉了就不行) 然后domain_name_servers后面还可以加dns地址比如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain_name_servers=192.168.10.1 8.8.8.8</span><br></pre></td></tr></table></figure>
+
+<p>如果使用无线网卡的 可以再加一套</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface wlan0</span><br><span class="line">static ip_address=192.168.10.174/24</span><br><span class="line">static routers=192.168.10.1</span><br><span class="line">static domain_name_servers=192.168.10.1</span><br></pre></td></tr></table></figure>
+
+<p>然后创建 <code>/etc/wpa.conf</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/wpa.conf</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>如果你的wifi没有密码</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network</span>=&#123;</span><br><span class="line">[Tab] ssid="你的无线网络名称（ssid）"</span><br><span class="line">[Tab] key_mgmt=NONE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果你的wifi使用WEP加密</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network</span>=&#123;</span><br><span class="line">[Tab] ssid="你的无线网络名称（ssid）"</span><br><span class="line">[Tab] key_mgmt=NONE</span><br><span class="line">[Tab] wep_key0="你的wifi密码"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果你的wifi使用WPA/WPA2加密</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network</span>=&#123;</span><br><span class="line">[Tab] ssid="你的无线网络名称（ssid）"</span><br><span class="line">[Tab] key_mgmt=WPA-PSK</span><br><span class="line">[Tab] psk="你的wifi密码"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>注1：所有符号都是半角符号（英文状态下的符号），“[Tab]”表示按一次Tab键</p>
+<p>注2：如果你不清楚wifi的加密模式，可以在安卓手机上用root explorer打开 /data/misc/wifi/wpa/wpa_supplicant.conf，查看wifi的信息。</p>
+<p>比如，我的<code>wpa.conf</code>文件是这样的：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network</span>=&#123;</span><br><span class="line">    ssid="NETGEAR"</span><br><span class="line">    key_mgmt=WPA-PSK</span><br><span class="line">    psk="PASSWORD"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后输入命令启用无线网卡：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ifup wlan0</span><br></pre></td></tr></table></figure>
+
+<p>可以连无线网了。</p>
+<p>重启网络服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo service networking restart</span><br></pre></td></tr></table></figure>
+
+<p>系统 2016-05-10-raspbian-jessie</p>
+<p>最后，你就可以在INTERNET上，通过 <code>ssh pi@yourdomain.vicp.net</code> 来登录树莓派了。</p>
+<h2 id="折腾3：SSH访问OPENWRT路由器"><a href="#折腾3：SSH访问OPENWRT路由器" class="headerlink" title="折腾3：SSH访问OPENWRT路由器"></a>折腾3：SSH访问OPENWRT路由器</h2><p>这个本来不应该写在这里的，不过弄完了π也一起弄得op，所以就先记载在这里吧。</p>
+<h3 id="修改SSH服务器Dropbear设置"><a href="#修改SSH服务器Dropbear设置" class="headerlink" title="修改SSH服务器Dropbear设置"></a>修改SSH服务器Dropbear设置</h3><p>这个步骤不是必须的，详见<a href>《OpenWrt SSH远程端口转发》</a>。</p>
+<p>在OP路由器中的LuCI中选择 <code>系统</code> –&gt; <code>管理</code>，勾选 <code>Allow remote hosts to connect to local SSH forwarded ports</code> 选项，保存并应用。</p>
+<p>也可以直接修改 <code>Dropbear</code> 配置文件 <code>/etc/config/dropbear</code> 。</p>
+<p>加上一句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">option GatewayPorts <span class="string">'on'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改OP防火墙设置"><a href="#修改OP防火墙设置" class="headerlink" title="修改OP防火墙设置"></a>修改OP防火墙设置</h3><p>在OP路由器的 LuCI 中选择 <code>网络</code> –&gt; <code>防火墙</code> –&gt; <code>Traffic Rules</code>，<code>Name</code> 填 <code>SSH</code> ，<code>Protocol</code> 选 <code>TCP</code> ，<code>External port</code> 选 22，保存并应用。</p>
+<p>也可以直接修改防火墙配置文件vim /etc/config/firewall</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">config rule</span><br><span class="line">        option target <span class="string">'ACCEPT'</span></span><br><span class="line">        option src <span class="string">'wan'</span></span><br><span class="line">        option proto <span class="string">'tcp'</span></span><br><span class="line">        option dest_port <span class="string">'22'</span></span><br><span class="line">        option name <span class="string">'SSH'</span></span><br></pre></td></tr></table></figure>
+
+<p>最后提醒一点，在修改SSH和防火墙设置之前，请设置一个复杂的密码，切记。</p>
+<h2 id="折腾4：使用DNSPOD更新外网域名A记录"><a href="#折腾4：使用DNSPOD更新外网域名A记录" class="headerlink" title="折腾4：使用DNSPOD更新外网域名A记录"></a>折腾4：使用DNSPOD更新外网域名A记录</h2><p>因为我不小心删掉了OP路由器里面关于ORAY的配置，一时间不知道咋办了，就只能暂时换个办法来设置公网域名访问。</p>
+<p>找个便宜域名，让树莓派自己更新某域名的 <code>A RECORD</code> 即可，我在 NAMECHEAP 用0.88美金买了个域名，然后发现无法因为消费太少，而不能使用系统自带的ADVANCED DNS服务。当时想的是，采用API的方式自动更新域名记录，NAMECHEAP不行，就只好找其他DNS服务提供商了，后来发现RAGE4好像是免费的，但是申请了之后，需要等待24小时激活，就没等RAGE4批准。</p>
+<p>一直以为DNSPOD的域名解析也需要备案，后来才知道，只有域名指向了国内主机空间A记录才需要域名备案，指向其他国外IP地址是不需要备案的，并且最重要的是，DNSPOD有域名的API SDK，正好符合我的使用条件。</p>
+<p>我下面的这段PYTHON代码，是从官方抄来的，地址在<a href="https://gist.github.com/chuangbo/833369" target="_blank" rel="noopener">这里</a>。循环间隔30秒查询一次π获得IP地址与域名的A记录是否一致，如果不一致，就更新域名的A记录。但是我觉得这个频率有点高，并且DNSPOD的免费套餐，1分钟最多30次更新域名解析记录，我也不想超过这个标准。修改成了采用crontab每2分钟执行一次这个脚本的方式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> httplib, urllib</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">params = dict(</span><br><span class="line">    login_email=<span class="string">"dns email address"</span>, <span class="comment"># 这里替换成你的DNSPOD登录账号</span></span><br><span class="line">    login_password=<span class="string">"dns password"</span>, <span class="comment"># 这里是密码</span></span><br><span class="line">    format=<span class="string">"json"</span>,</span><br><span class="line">    domain_id=<span class="number">39421602</span>, <span class="comment"># 替换成你需要更改的域名的 domain_id, 可以通过 API Domain.List 获得</span></span><br><span class="line">    record_id=<span class="number">197443695</span>, <span class="comment"># 替换成你需要更改域名的 record_id, 可以通过 API Record.List 获得</span></span><br><span class="line">    sub_domain=<span class="string">"www"</span>, <span class="comment"># 替换成你想修改的子域名</span></span><br><span class="line">    record_line=<span class="string">"默认"</span>,</span><br><span class="line">)</span><br><span class="line">current_ip = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ddns</span><span class="params">(ip)</span>:</span></span><br><span class="line">    params.update(dict(value=ip))</span><br><span class="line">    headers = &#123;<span class="string">"Content-type"</span>: <span class="string">"application/x-www-form-urlencoded"</span>, <span class="string">"Accept"</span>: <span class="string">"text/json"</span>&#125;</span><br><span class="line">    conn = httplib.HTTPSConnection(<span class="string">"dnsapi.cn"</span>)</span><br><span class="line">    conn.request(<span class="string">"POST"</span>, <span class="string">"/Record.Ddns"</span>, urllib.urlencode(params), headers)</span><br><span class="line">    </span><br><span class="line">    response = conn.getresponse()</span><br><span class="line">    <span class="keyword">print</span> response.status, response.reason</span><br><span class="line">    data = response.read()</span><br><span class="line">    <span class="keyword">print</span> data</span><br><span class="line">    conn.close()</span><br><span class="line">    <span class="keyword">return</span> response.status == <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getip</span><span class="params">()</span>:</span></span><br><span class="line">    sock = socket.create_connection((<span class="string">'ns1.dnspod.net'</span>, <span class="number">6666</span>))</span><br><span class="line">    ip = sock.recv(<span class="number">16</span>)</span><br><span class="line">    sock.close()</span><br><span class="line">    <span class="keyword">return</span> ip</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        ip = getip()</span><br><span class="line">        <span class="keyword">print</span> ip</span><br><span class="line">        <span class="keyword">if</span> current_ip != ip:</span><br><span class="line">            <span class="keyword">if</span> ddns(ip):</span><br><span class="line">                current_ip = ip</span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="keyword">print</span> e</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>替换上面脚本中的内容即可，想说的是，</p>
+<p>domain id 和 record id 也可以分别通过下面的命令行方式获取，直观一些。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k https://dnsapi.cn/Domain.List -d <span class="string">"login_email=xxx&amp;login_password=xxx"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k https://dnsapi.cn/Record.List -d <span class="string">"login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx"</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，在树莓派的crontab里加入这样一句话即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/2 0 * * * /usr/bin/python /usr/test2.py</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意几点：</p>
+<ol>
+<li>在crontab命令中的环境变量和命令行方式并不一致，所以，最好加上执行命令的全部路径。</li>
+<li>还需要通过 <code>sudo su</code> 的方式，切换到root用户下执行 <code>crontab -e</code>，否则修改的pi用户的crontab，效果就达不到了。</li>
+<li>最后通过 <code>/etc/init.d/cron restart</code> 来重启crontab</li>
+<li>cron有两个位置，一个是系统的cron定时任务，文件在 /etc/crontab ，而每个用户的cron，则位于 /var/spool/cron/crontabs/ 目录下，每个用户（pi ，root）分别有cron定时任务的。</li>
+</ol>
+<p>系统cron和crontab的重启命令并不相同</p>
+<p>对于系统cron</p>
+<p>sudo systemctl status cron //查看状态<br>sudo systemctl start cron //启动服务<br>sudo systemctl stop cron //停止服务<br>sudo systemctl restart cron //重启服务</p>
+<p>对于每个用户的crontab</p>
+<p>/sbin/service crond start 启动<br>/sbin/service crond stop 停止<br>/sbin/service crond restart 重启服务<br>/sbin/service crond reload 重新加载配置</p>
+<p>如果直接使用 <code>crontab -e</code> 打开的cron定时任务文件并不是 <code>/etc/crontab</code> ，而是在 <code>/var/spool/cron/crontabs/</code> 目录下的文件：pi ，root 。每个用户（pi ，root）分别有cron定时任务的。</p>
+<p>关于这个的具体说明，可以看这个<a href="http://www.eeboard.com/bbs/thread-28299-1-1.html" target="_blank" rel="noopener">帖子</a>。</p>
+<p>上面讨论的东西，可能和这个主题帖关系不大，却很重要，所以单独另外开了一个帖子<a href="http://www.wuliaole.com/post/what_you_need_to_know_about_cron_and_crontab">《关于cron和crontab的那些事》</a>来系统的总结下关于cron和crontab的内容。</p>
+<h2 id="折腾5-用树莓派GPIO控制PC电源开关"><a href="#折腾5-用树莓派GPIO控制PC电源开关" class="headerlink" title="折腾5:用树莓派GPIO控制PC电源开关"></a>折腾5:用树莓派GPIO控制PC电源开关</h2><p>这个先写在这里吧，最近几天的想法，主要是因为我的技嘉主板BM5-HD3的WOL功能貌似不好用，只要电源关机或者休眠，网卡灯也一起跟着灭了，弄得我只要不在电脑旁边，就无法开机。然后发现可以使用键盘鼠标或者电源按钮唤醒，然后就当然有了这个折腾了。正在搞，回来总结一下。</p>
+<h2 id="折腾6：硬盘格式化、挂载"><a href="#折腾6：硬盘格式化、挂载" class="headerlink" title="折腾6：硬盘格式化、挂载"></a>折腾6：硬盘格式化、挂载</h2><p>把U盘或者硬盘接在USB扣上，然后运行df -h,</p>
+<p><img src="/2016/05/26/working_on_raspberry_pi/disk-mount.png" alt></p>
+<p>最后那个200多G的就是接的移动硬盘，这个时候可以通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /mnt/hd250g <span class="comment">#建立个目录</span></span><br><span class="line">sudo mount /dev/sda1 /mnt/hd250g <span class="comment">#把sda1和hd250g连接起来</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="如何自动挂载硬盘？"><a href="#如何自动挂载硬盘？" class="headerlink" title="如何自动挂载硬盘？"></a>如何自动挂载硬盘？</h3><p>使用 <code>sudo vim /etc/fstab</code>，可以看到下面这样的内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">proc            /proc           proc    defaults          0       0</span><br><span class="line">/dev/mmcblk0p1  /boot           vfat    defaults          0       2</span><br><span class="line">/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1</span><br><span class="line">/dev/sda1       /home/pi/samba  ext4    defaults          0       0</span><br><span class="line"><span class="comment"># a swapfile is not a swap partition, no line here</span></span><br><span class="line"><span class="comment">#   use  dphys-swapfile swap[on|off]  for that</span></span><br></pre></td></tr></table></figure>
+
+<p>指定 <code>fdisk -l</code>（或者 <code>sudo blkid</code> 命令） 中看到的硬盘盘符并且指定挂载的位置，树莓派开机之后，就能自动挂载了。</p>
+<p>然后就遇到了这个错误，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mount is denied because the NTFS volume is already exclusively opened.</span><br><span class="line">The volume may be already mounted, or another software may use it <span class="built_in">which</span></span><br><span class="line">could be identified <span class="keyword">for</span> example by the <span class="built_in">help</span> of the <span class="string">'fuser'</span> <span class="built_in">command</span>.</span><br></pre></td></tr></table></figure>
+
+<p>先卸载了，<code>sudo umount -fl /dev/sda1</code>。</p>
+<p>因为我这个外接硬盘之前都是用在windows系统下，用的NTFS分区，而linxu一般用的是ext2 ext3 ext4分区。</p>
+<p>还有一个挂载硬盘更为稳妥的方式，使用 <code>sudo blkid</code> 命令查看硬盘的UUID，然后在 <code>vim /etc/fstab</code> 中，直接填写<code>UUID=&quot;XXX&quot;</code>即可，这种方式，可以保证在有多个硬盘的情况下，硬盘加载的顺序不会乱。</p>
+<p>至于格式化，一句话 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkfs -t ext4 /dev/sda1</span><br></pre></td></tr></table></figure>
+
+<h2 id="折腾7：树莓派-samba-共享"><a href="#折腾7：树莓派-samba-共享" class="headerlink" title="折腾7：树莓派 samba 共享"></a>折腾7：树莓派 samba 共享</h2><p>为了方便的共享树莓派上下载的资源，在树莓派上配置 Samba 服务是很好的选择。</p>
+<h3 id="安装-samba："><a href="#安装-samba：" class="headerlink" title="安装 samba："></a>安装 samba：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install samba</span><br></pre></td></tr></table></figure>
+
+<p>调整设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/samba/smb.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">    workgroup = WORKGROUP</span><br><span class="line">    security = user</span><br><span class="line">    unix password sync = no</span><br><span class="line">    socket options = TCP_NODELAY</span><br><span class="line">[homes]</span><br><span class="line">    comment = Home Directories</span><br><span class="line">    browseable = no</span><br><span class="line">    <span class="built_in">read</span> only = no</span><br><span class="line">    create mask = 0600</span><br><span class="line">    directory mask = 0700</span><br><span class="line">    valid users = %S</span><br><span class="line">[media]</span><br><span class="line">    comment = Raspberry Pi SMB</span><br><span class="line">    path = /media/PI</span><br><span class="line">    browseable = yes</span><br><span class="line">    writeable = yes</span><br><span class="line">    create mask = 0600</span><br><span class="line">    directory mask = 0700</span><br><span class="line">    guest ok = yes</span><br></pre></td></tr></table></figure>
+
+<p>global 域下的 socket options 设置为 TCP_NODELAY 可以得到更好的性能。homes 域泛解析所有的用户目录，当有连接请求时，所有的域名称都会被检索，如果有和用户名相同的域名称，那么该域下的设置将替代 homes 域被解析，如果没有，那么 homes 域的设置将单独被解析。homes 域未设定 path 时默认为用户的 home 目录，browseable = no 表示 homes 作为共享目录名是被隐藏的，而无论 browseable 设置为 yes 还是 no，每个用户的用户名都是作为共享目录名存在的。</p>
+<p>samba 的用户权限要过两关，首先是满足 samba 的设置设定的权限，其次是遵循 Linux 文件系统的权限。media 域设置了包括 guest 用户在内的所有用户都有读写权限，但是实际上只有满足 /media/PI 文件系统权限设定的用户才有真正的写权限，这么设置最终造成：/media/PI 文件系统设定的属主、组等有相应权限，比如写，其余用户只有读权限。</p>
+<p>为 samba 共享设置密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo smbpasswd -a pi</span><br></pre></td></tr></table></figure>
+
+<p>另外，也可以设置 samba 以 xinetd 的方式按需启动，节省资源:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/xinetd.d/netbios-ssn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">service netbios-ssn</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">disable</span>         = no</span><br><span class="line">    socket_type     = stream</span><br><span class="line">    protocol        = tcp</span><br><span class="line">    <span class="built_in">wait</span>            = no</span><br><span class="line">    user            = root</span><br><span class="line">    server          = /usr/sbin/smbd</span><br><span class="line">    instances       = 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/xinetd.d/netbios-ns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">service netbios-ns</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">disable</span>         = no</span><br><span class="line">    socket_type     = dgram</span><br><span class="line">    protocol        = udp</span><br><span class="line">    <span class="built_in">wait</span>            = yes</span><br><span class="line">    user            = root</span><br><span class="line">    server          = /usr/sbin/nmbd</span><br><span class="line">    instances       = 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>移除 samba 按 init 的方式启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-rc.d samba remove</span><br></pre></td></tr></table></figure>
+
+<p>至于在 <code>/etc/init.d/</code> 的自动启动脚本，我黏贴在这里</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### BEGIN INIT INFO</span></span><br><span class="line"><span class="comment"># Provides:          samba</span></span><br><span class="line"><span class="comment"># Required-Start:</span></span><br><span class="line"><span class="comment"># Required-Stop:</span></span><br><span class="line"><span class="comment"># Default-Start:</span></span><br><span class="line"><span class="comment"># Default-Stop:</span></span><br><span class="line"><span class="comment"># Short-Description: ensure Samba daemons are started (nmbd and smbd)</span></span><br><span class="line"><span class="comment">### END INIT INFO</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="comment"># start nmbd, smbd and samba-ad-dc unconditionally</span></span><br><span class="line"><span class="comment"># the init scripts themselves check if they are needed or not</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        /etc/init.d/nmbd start</span><br><span class="line">        /etc/init.d/smbd start</span><br><span class="line">        /etc/init.d/samba-ad-dc start</span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        /etc/init.d/samba-ad-dc stop</span><br><span class="line">        /etc/init.d/smbd stop</span><br><span class="line">        /etc/init.d/nmbd stop</span><br><span class="line">        ;;</span><br><span class="line">    reload)</span><br><span class="line">        /etc/init.d/smbd reload</span><br><span class="line">        ;;</span><br><span class="line">    restart|force-reload)</span><br><span class="line">        /etc/init.d/nmbd <span class="string">"<span class="variable">$1</span>"</span></span><br><span class="line">        /etc/init.d/smbd <span class="string">"<span class="variable">$1</span>"</span></span><br><span class="line">        /etc/init.d/samba-ad-dc <span class="string">"<span class="variable">$1</span>"</span></span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">        status=0</span><br><span class="line">        NMBD_DISABLED=`testparm -s --parameter-name=<span class="string">'disable netbios'</span> 2&gt;/dev/null || <span class="literal">true</span>`</span><br><span class="line">        SERVER_ROLE=`samba-tool testparm --parameter-name=<span class="string">"server role"</span>  2&gt;/dev/null | tail -1 || <span class="literal">true</span>`</span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$SERVER_ROLE</span>"</span> != <span class="string">"active directory domain controller"</span> ]; <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">if</span> [ <span class="string">"<span class="variable">$NMBD_DISABLED</span>"</span> != <span class="string">"Yes"</span> ]; <span class="keyword">then</span></span><br><span class="line">                /etc/init.d/nmbd status || status=$?</span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">            /etc/init.d/smbd status || status=$?</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            /etc/init.d/samba-ad-dc status || status=$?</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">exit</span> <span class="variable">$status</span></span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Usage: /etc/init.d/samba &#123;start|stop|reload|restart|force-reload|status&#125;"</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<p>大家需要的话，可以去我的 github 里面的 randomfiles 库找，具体文件的地址在<a href="http://www.github.com/tinyvane/randomfiles/samba" target="_blank" rel="noopener">这里</a>。</p>
+<p>发现就算在路由器上开了445和139端口，外网也是不能访问SAMBA共享，所以，只能先暂时安装个VPN，先拨号进去VPN，然后就可以访问SAMBA资源了。具体见折腾9：为树莓派安装VPN支持。</p>
+<h2 id="折腾8：获得正确的系统时间"><a href="#折腾8：获得正确的系统时间" class="headerlink" title="折腾8：获得正确的系统时间"></a>折腾8：获得正确的系统时间</h2><p>在树莓派上打 <code>date</code> 命令可以查看系统的日期时间。由于树莓派没有电池，关机后彻底断电，无法保存时间。树莓派默认安装了 <code>NTP</code>(Network Time Protocol)服务来获取互联网上ntp服务器提供的时间。如果这个时间不准，可以用这个命令校准一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ntpd -s -d</span><br></pre></td></tr></table></figure>
+
+<p>如果时间还是不准确，就用下面命令强制校准</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo date --s=<span class="string">"2016-06-22 12:22:00"</span></span><br></pre></td></tr></table></figure>
+
+<p>如果校准了之后，发现时间还是不对，可以先不用强制校准，毕竟这个方法时间不准确，通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+
+<p>修改international设置，来设置下市区，选择 <code>Asia</code> - <code>Shanghai</code> 即可，然后重新校准时间。</p>
+<p>如果上面的方法校准后，还不行，说明树莓派没有正确的连接NTP服务器。</p>
+<p>打开NTP服务配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/ntp.conf</span><br></pre></td></tr></table></figure>
+
+<p>找到以下两行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># You do need to talk to an NTP server or two (or three).</span></span><br><span class="line"><span class="comment"># server ntp.your-provider.example</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在下面添加以下内容，是一些亲测可用的 <code>NTP</code> 服务器。第一行最后的perfer表示优先使用此服务器，也就是复旦大学的 <code>NTP</code> 服务器。添加之后按 <code>Ctrl</code> + <code>X</code> 保存退出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server ntp.fudan.edu.cn iburst perfer</span><br><span class="line">server time.asia.apple.com iburst</span><br><span class="line">server asia.pool.ntp.org iburst</span><br><span class="line">server ntp.nict.jp iburst</span><br><span class="line">server time.nist.gov iburst</span><br></pre></td></tr></table></figure>
+
+<p>最后，重启 <code>NTP</code> 服务w</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ntp restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://www.cnblogs.com/xiaowuyi/p/4051238.html" target="_blank" rel="noopener">安装samba实现文件共享</a><br><a href="https://www.jmlog.com/raspberry-tutorial-samba-config/" target="_blank" rel="noopener">树莓派教程：配置 Samba 局域网共享</a></p>
+<h2 id="折腾10：ARIA2-远程下载"><a href="#折腾10：ARIA2-远程下载" class="headerlink" title="折腾10：ARIA2 远程下载"></a>折腾10：ARIA2 远程下载</h2>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/" data-id="cjyx47x9l00kjisokvpc28k3c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "节约用爱"
+        },
+        "headline": "树莓派折腾系列",
+        "image": "http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/disk-mount.png",
+        "keywords": "树莓派 raspberry bt sync 花生壳",
+        "genre": "树莓派 入门",
+        "datePublished": "2016-05-26",
+        "dateCreated": "2016-05-26",
+        "dateModified": "2018-10-11",
+        "url": "http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/",
+        "description": "文章更新
+20160526-更新BT SYNC和使用静态IP地址
+20160613-更新了使用DNSPOD更新域名A记录的方式更新外网域名访问
+20160623-更新挂载硬盘、格式化等方法
+20160712-BT SYNC独立成文"
+        "wordCount": 2450
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/tinyvane" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="../../../06/01/switch_from_bash_to_ohmyzsh/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            MAC系统从BASH转到了OH-MY-ZSH
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="../../25/sketchup_modelling_practise/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">SKETCHUP建模练习</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/08/04/the_human_way_of_inserting_pics_in_hexo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804230940.png)" alt="HEXO插入图片的BT脑回路" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="title">HEXO插入图片的BT脑回路</a></p>
+                            <p class="item-date"><time datetime="2019-08-04T06:25:01.000Z" itemprop="datePublished">2019-08-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/03/vba_scripts_in_word/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/03/vba_scripts_in_word/" class="title">WORD中的VBA操作</a></p>
+                            <p class="item-date"><time datetime="2019-08-03T06:55:17.000Z" itemprop="datePublished">2019-08-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/07/19/how_does_office365_coexist_with_msi_visio_2016/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804064606.png)" alt="微软即点即用和msi共存的安装方法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="title">微软即点即用和msi共存的安装方法</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T09:13:03.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="title">20190719-shadowsocks支持windows邮件、OFFICE登陆翻墙</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T05:11:23.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/common_used_git_commands/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/common_used_git_commands/" class="title">201907199-常用GIT命令和使用场景</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T04:23:57.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/CentOS/">CentOS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/">Hexo</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/基础/">基础</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Linux/">Linux</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/MacOS/">MacOS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/折腾/">折腾</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/效率/">效率</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/日常使用/">日常使用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/">树莓派</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/入门/">入门</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/编程/">编程</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/07/">七月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/10/">十月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/05/">五月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/08/">八月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/03/">三月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/12/">十二月 2015</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net/">.net</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net-core/">.net core</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/100m宽带/">100m宽带</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/3D建模/">3D建模</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/404/">404</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/C/">C#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/GPT/">GPT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/IMG/">IMG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/M3-bitlocker-loader/">M3 bitlocker loader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MAC/">MAC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MBR/">MBR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MarkDown/">MarkDown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/OSX/">OSX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PC/">PC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/RASPBERRY/">RASPBERRY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Raspberry/">Raspberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Resilio-Sync/">Resilio Sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Sublime-Text-3/">Sublime Text 3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WD/">WD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Winform/">Winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WordPress/">WordPress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Xamarin/">Xamarin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/aliyun/">aliyun</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apple/">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/autocad/">autocad</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bash/">bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bitlocker/">bitlocker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bonjor/">bonjor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bower/">bower</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/brew/">brew</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bt-sync/">bt sync</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/btsync/">btsync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/c/">c#</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos/">centos</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos7/">centos7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/coding-net/">coding.net</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cow/">cow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cp/">cp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/csharp/">csharp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cygwin/">cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/deploy/">deploy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dotnetcore/">dotnetcore</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dropbear/">dropbear</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/edge/">edge</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/electon/">electon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/emergency-mode/">emergency mode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ext4/">ext4</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/firewall/">firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/formula/">formula</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ghost/">ghost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/git/">git</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/github/">github</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gz/">gz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hexo/">hexo</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs/">hfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs-for-Windows/">hfs for Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/homebrew/">homebrew</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hook/">hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ie/">ie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/karabiner/">karabiner</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchagents/">launchagents</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchdaemon/">launchdaemon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/linux/">linux</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ln/">ln</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mac/">mac</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/macOS/">macOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mklink/">mklink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mouse/">mouse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/msi/">msi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mv/">mv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ngrok/">ngrok</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/node-js/">node.js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/npm/">npm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/office/">office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/oh-my-zsh/">oh-my-zsh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openvpn/">openvpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/opernwrt/">opernwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/osx/">osx</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/pc/">pc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php-fpm/">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/progon/">progon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rapsberry/">rapsberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry/">raspberry</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry-pi/">raspberry pi</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspbian/">raspbian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/redhat/">redhat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/repo/">repo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resilio-sync/">resilio sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resiliosync/">resiliosync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/responsity/">responsity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rhel/">rhel</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rm/">rm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rpm/">rpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rsa/">rsa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/runtime/">runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/screen/">screen</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sdk/">sdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shadowsocks/">shadowsocks</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shell/">shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shortcuts/">shortcuts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sketchup/">sketchup</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/socks5/">socks5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ssh/">ssh</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/symlink/">symlink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/syncthing/">syncthing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/synergy/">synergy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/tar/">tar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/thinkphp/">thinkphp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/uac/">uac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vba/">vba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vim/">vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visio/">visio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visual-studio/">visual studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vpn/">vpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vs/">vs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vscode/">vscode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wifi/">wifi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows/">windows</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows-10/">windows 10</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows10/">windows10</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/winform/">winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wireshark/">wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/word/">word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wordpress/">wordpress</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xamarin/">xamarin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xampp/">xampp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xdebug/">xdebug</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/yum/">yum</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/代码/">代码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/低落/">低落</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/作业/">作业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光猫/">光猫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光纤/">光纤</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/共享/">共享</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/分类/">分类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/加密/">加密</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/北京联通/">北京联通</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/升级/">升级</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/华为/">华为</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/单曲循环/">单曲循环</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/博客/">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/双击/">双击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反向代理/">反向代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反编译/">反编译</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/右键菜单/">右键菜单</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/同步/">同步</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/启动/">启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/喝酒/">喝酒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/图片/">图片</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/平铺/">平铺</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/开发/">开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/弹幕/">弹幕</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/微信/">微信</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/快捷键/">快捷键</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/截图/">截图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/技巧/">技巧</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/抓包/">抓包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/提速/">提速</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/插件/">插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/搬瓦工/">搬瓦工</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/斗鱼/">斗鱼</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/日文键盘/">日文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/明月永在/">明月永在</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/最小化/">最小化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/权限/">权限</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/查壳/">查壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/树莓派/">树莓派</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/桌面/">桌面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/水印/">水印</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/永久链接/">永久链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/浏览器/">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/烧录/">烧录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/用户管理/">用户管理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/监听/">监听</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/目录/">目录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/科学上网/">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/移动硬盘/">移动硬盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/窗口/">窗口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/站内链接/">站内链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/系统/">系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/紧急模式/">紧急模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/置顶/">置顶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/脚本/">脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/花生壳/">花生壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/英文键盘/">英文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/调试/">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/赚钱宝/">赚钱宝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/跨平台/">跨平台</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件/">软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件使用/">软件使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/辅助工具/">辅助工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/迁移/">迁移</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/远程/">远程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/错误/">错误</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键位/">键位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘/">键盘</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘模拟/">键盘模拟</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/随笔/">随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/音乐/">音乐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/饥荒/">饥荒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/鼠标/">鼠标</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="../../../../tags/net/" style="font-size: 12px;">.net</a> <a href="../../../../tags/net-core/" style="font-size: 10px;">.net core</a> <a href="../../../../tags/100m宽带/" style="font-size: 10px;">100m宽带</a> <a href="../../../../tags/3D建模/" style="font-size: 10px;">3D建模</a> <a href="../../../../tags/404/" style="font-size: 10px;">404</a> <a href="../../../../tags/C/" style="font-size: 10px;">C#</a> <a href="../../../../tags/FTP/" style="font-size: 10px;">FTP</a> <a href="../../../../tags/GPT/" style="font-size: 10px;">GPT</a> <a href="../../../../tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="../../../../tags/IMG/" style="font-size: 10px;">IMG</a> <a href="../../../../tags/Linux/" style="font-size: 10px;">Linux</a> <a href="../../../../tags/M3-bitlocker-loader/" style="font-size: 10px;">M3 bitlocker loader</a> <a href="../../../../tags/MAC/" style="font-size: 11px;">MAC</a> <a href="../../../../tags/MBR/" style="font-size: 10px;">MBR</a> <a href="../../../../tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="../../../../tags/OSX/" style="font-size: 10px;">OSX</a> <a href="../../../../tags/PC/" style="font-size: 10px;">PC</a> <a href="../../../../tags/PHP/" style="font-size: 10px;">PHP</a> <a href="../../../../tags/RASPBERRY/" style="font-size: 10px;">RASPBERRY</a> <a href="../../../../tags/Raspberry/" style="font-size: 10px;">Raspberry</a> <a href="../../../../tags/Resilio-Sync/" style="font-size: 10px;">Resilio Sync</a> <a href="../../../../tags/Sublime-Text-3/" style="font-size: 10px;">Sublime Text 3</a> <a href="../../../../tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="../../../../tags/Vim/" style="font-size: 10px;">Vim</a> <a href="../../../../tags/Vimium/" style="font-size: 10px;">Vimium</a> <a href="../../../../tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="../../../../tags/WD/" style="font-size: 10px;">WD</a> <a href="../../../../tags/Winform/" style="font-size: 10px;">Winform</a> <a href="../../../../tags/WordPress/" style="font-size: 10px;">WordPress</a> <a href="../../../../tags/Xamarin/" style="font-size: 10px;">Xamarin</a> <a href="../../../../tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="../../../../tags/apache/" style="font-size: 10px;">apache</a> <a href="../../../../tags/apple/" style="font-size: 10px;">apple</a> <a href="../../../../tags/autocad/" style="font-size: 10px;">autocad</a> <a href="../../../../tags/bash/" style="font-size: 10px;">bash</a> <a href="../../../../tags/bitlocker/" style="font-size: 10px;">bitlocker</a> <a href="../../../../tags/bonjor/" style="font-size: 10px;">bonjor</a> <a href="../../../../tags/bower/" style="font-size: 10px;">bower</a> <a href="../../../../tags/brew/" style="font-size: 11px;">brew</a> <a href="../../../../tags/bt-sync/" style="font-size: 11px;">bt sync</a> <a href="../../../../tags/btsync/" style="font-size: 10px;">btsync</a> <a href="../../../../tags/c/" style="font-size: 15px;">c#</a> <a href="../../../../tags/centos/" style="font-size: 18px;">centos</a> <a href="../../../../tags/centos7/" style="font-size: 10px;">centos7</a> <a href="../../../../tags/chrome/" style="font-size: 10px;">chrome</a> <a href="../../../../tags/coding-net/" style="font-size: 10px;">coding.net</a> <a href="../../../../tags/cow/" style="font-size: 10px;">cow</a> <a href="../../../../tags/cp/" style="font-size: 10px;">cp</a> <a href="../../../../tags/cron/" style="font-size: 10px;">cron</a> <a href="../../../../tags/crontab/" style="font-size: 10px;">crontab</a> <a href="../../../../tags/csharp/" style="font-size: 11px;">csharp</a> <a href="../../../../tags/cygwin/" style="font-size: 10px;">cygwin</a> <a href="../../../../tags/deploy/" style="font-size: 10px;">deploy</a> <a href="../../../../tags/dotnetcore/" style="font-size: 10px;">dotnetcore</a> <a href="../../../../tags/dropbear/" style="font-size: 10px;">dropbear</a> <a href="../../../../tags/edge/" style="font-size: 10px;">edge</a> <a href="../../../../tags/electon/" style="font-size: 10px;">electon</a> <a href="../../../../tags/emergency-mode/" style="font-size: 10px;">emergency mode</a> <a href="../../../../tags/ext4/" style="font-size: 10px;">ext4</a> <a href="../../../../tags/firewall/" style="font-size: 10px;">firewall</a> <a href="../../../../tags/formula/" style="font-size: 10px;">formula</a> <a href="../../../../tags/ghost/" style="font-size: 10px;">ghost</a> <a href="../../../../tags/git/" style="font-size: 17px;">git</a> <a href="../../../../tags/github/" style="font-size: 13px;">github</a> <a href="../../../../tags/gz/" style="font-size: 10px;">gz</a> <a href="../../../../tags/hexo/" style="font-size: 19px;">hexo</a> <a href="../../../../tags/hfs/" style="font-size: 10px;">hfs</a> <a href="../../../../tags/hfs-for-Windows/" style="font-size: 10px;">hfs for Windows</a> <a href="../../../../tags/homebrew/" style="font-size: 13px;">homebrew</a> <a href="../../../../tags/hook/" style="font-size: 10px;">hook</a> <a href="../../../../tags/ie/" style="font-size: 10px;">ie</a> <a href="../../../../tags/karabiner/" style="font-size: 10px;">karabiner</a> <a href="../../../../tags/launchagents/" style="font-size: 11px;">launchagents</a> <a href="../../../../tags/launchdaemon/" style="font-size: 10px;">launchdaemon</a> <a href="../../../../tags/linux/" style="font-size: 18px;">linux</a> <a href="../../../../tags/ln/" style="font-size: 10px;">ln</a> <a href="../../../../tags/mac/" style="font-size: 20px;">mac</a> <a href="../../../../tags/macOS/" style="font-size: 10px;">macOS</a> <a href="../../../../tags/mklink/" style="font-size: 10px;">mklink</a> <a href="../../../../tags/mouse/" style="font-size: 10px;">mouse</a> <a href="../../../../tags/msi/" style="font-size: 10px;">msi</a> <a href="../../../../tags/mv/" style="font-size: 10px;">mv</a> <a href="../../../../tags/mysql/" style="font-size: 12px;">mysql</a> <a href="../../../../tags/nginx/" style="font-size: 11px;">nginx</a> <a href="../../../../tags/ngrok/" style="font-size: 10px;">ngrok</a> <a href="../../../../tags/node-js/" style="font-size: 12px;">node.js</a> <a href="../../../../tags/npm/" style="font-size: 12px;">npm</a> <a href="../../../../tags/office/" style="font-size: 10px;">office</a> <a href="../../../../tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="../../../../tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="../../../../tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="../../../../tags/opernwrt/" style="font-size: 10px;">opernwrt</a> <a href="../../../../tags/osx/" style="font-size: 13px;">osx</a> <a href="../../../../tags/pc/" style="font-size: 12px;">pc</a> <a href="../../../../tags/php/" style="font-size: 16px;">php</a> <a href="../../../../tags/php-fpm/" style="font-size: 11px;">php-fpm</a> <a href="../../../../tags/progon/" style="font-size: 10px;">progon</a> <a href="../../../../tags/rapsberry/" style="font-size: 10px;">rapsberry</a> <a href="../../../../tags/raspberry/" style="font-size: 14px;">raspberry</a> <a href="../../../../tags/raspberry-pi/" style="font-size: 13px;">raspberry pi</a> <a href="../../../../tags/raspbian/" style="font-size: 10px;">raspbian</a> <a href="../../../../tags/redhat/" style="font-size: 10px;">redhat</a> <a href="../../../../tags/repo/" style="font-size: 10px;">repo</a> <a href="../../../../tags/resilio-sync/" style="font-size: 10px;">resilio sync</a> <a href="../../../../tags/resiliosync/" style="font-size: 10px;">resiliosync</a> <a href="../../../../tags/responsity/" style="font-size: 10px;">responsity</a> <a href="../../../../tags/rhel/" style="font-size: 11px;">rhel</a> <a href="../../../../tags/rm/" style="font-size: 10px;">rm</a> <a href="../../../../tags/rpm/" style="font-size: 10px;">rpm</a> <a href="../../../../tags/rsa/" style="font-size: 10px;">rsa</a> <a href="../../../../tags/runtime/" style="font-size: 10px;">runtime</a> <a href="../../../../tags/screen/" style="font-size: 10px;">screen</a> <a href="../../../../tags/sdk/" style="font-size: 10px;">sdk</a> <a href="../../../../tags/shadowsocks/" style="font-size: 14px;">shadowsocks</a> <a href="../../../../tags/shell/" style="font-size: 11px;">shell</a> <a href="../../../../tags/shortcuts/" style="font-size: 10px;">shortcuts</a> <a href="../../../../tags/sketchup/" style="font-size: 10px;">sketchup</a> <a href="../../../../tags/socks5/" style="font-size: 10px;">socks5</a> <a href="../../../../tags/ssh/" style="font-size: 11px;">ssh</a> <a href="../../../../tags/symlink/" style="font-size: 10px;">symlink</a> <a href="../../../../tags/syncthing/" style="font-size: 10px;">syncthing</a> <a href="../../../../tags/synergy/" style="font-size: 10px;">synergy</a> <a href="../../../../tags/tar/" style="font-size: 10px;">tar</a> <a href="../../../../tags/thinkphp/" style="font-size: 10px;">thinkphp</a> <a href="../../../../tags/uac/" style="font-size: 10px;">uac</a> <a href="../../../../tags/vba/" style="font-size: 10px;">vba</a> <a href="../../../../tags/vim/" style="font-size: 10px;">vim</a> <a href="../../../../tags/visio/" style="font-size: 10px;">visio</a> <a href="../../../../tags/visual-studio/" style="font-size: 10px;">visual studio</a> <a href="../../../../tags/vpn/" style="font-size: 10px;">vpn</a> <a href="../../../../tags/vs/" style="font-size: 10px;">vs</a> <a href="../../../../tags/vscode/" style="font-size: 13px;">vscode</a> <a href="../../../../tags/wifi/" style="font-size: 10px;">wifi</a> <a href="../../../../tags/windows/" style="font-size: 13px;">windows</a> <a href="../../../../tags/windows-10/" style="font-size: 10px;">windows 10</a> <a href="../../../../tags/windows10/" style="font-size: 11px;">windows10</a> <a href="../../../../tags/winform/" style="font-size: 10px;">winform</a> <a href="../../../../tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="../../../../tags/word/" style="font-size: 10px;">word</a> <a href="../../../../tags/wordpress/" style="font-size: 11px;">wordpress</a> <a href="../../../../tags/xamarin/" style="font-size: 11px;">xamarin</a> <a href="../../../../tags/xampp/" style="font-size: 10px;">xampp</a> <a href="../../../../tags/xdebug/" style="font-size: 10px;">xdebug</a> <a href="../../../../tags/yum/" style="font-size: 11px;">yum</a> <a href="../../../../tags/代码/" style="font-size: 10px;">代码</a> <a href="../../../../tags/低落/" style="font-size: 10px;">低落</a> <a href="../../../../tags/作业/" style="font-size: 10px;">作业</a> <a href="../../../../tags/光猫/" style="font-size: 10px;">光猫</a> <a href="../../../../tags/光纤/" style="font-size: 10px;">光纤</a> <a href="../../../../tags/共享/" style="font-size: 10px;">共享</a> <a href="../../../../tags/内网穿透/" style="font-size: 10px;">内网穿透</a> <a href="../../../../tags/分类/" style="font-size: 10px;">分类</a> <a href="../../../../tags/加密/" style="font-size: 11px;">加密</a> <a href="../../../../tags/北京联通/" style="font-size: 11px;">北京联通</a> <a href="../../../../tags/升级/" style="font-size: 10px;">升级</a> <a href="../../../../tags/华为/" style="font-size: 10px;">华为</a> <a href="../../../../tags/单曲循环/" style="font-size: 10px;">单曲循环</a> <a href="../../../../tags/博客/" style="font-size: 10px;">博客</a> <a href="../../../../tags/双击/" style="font-size: 10px;">双击</a> <a href="../../../../tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="../../../../tags/反编译/" style="font-size: 12px;">反编译</a> <a href="../../../../tags/右键菜单/" style="font-size: 10px;">右键菜单</a> <a href="../../../../tags/同步/" style="font-size: 13px;">同步</a> <a href="../../../../tags/启动/" style="font-size: 10px;">启动</a> <a href="../../../../tags/喝酒/" style="font-size: 10px;">喝酒</a> <a href="../../../../tags/图片/" style="font-size: 10px;">图片</a> <a href="../../../../tags/安装/" style="font-size: 10px;">安装</a> <a href="../../../../tags/平铺/" style="font-size: 10px;">平铺</a> <a href="../../../../tags/开发/" style="font-size: 10px;">开发</a> <a href="../../../../tags/弹幕/" style="font-size: 10px;">弹幕</a> <a href="../../../../tags/微信/" style="font-size: 10px;">微信</a> <a href="../../../../tags/快捷键/" style="font-size: 13px;">快捷键</a> <a href="../../../../tags/截图/" style="font-size: 10px;">截图</a> <a href="../../../../tags/技巧/" style="font-size: 10px;">技巧</a> <a href="../../../../tags/抓包/" style="font-size: 10px;">抓包</a> <a href="../../../../tags/提速/" style="font-size: 10px;">提速</a> <a href="../../../../tags/插件/" style="font-size: 10px;">插件</a> <a href="../../../../tags/搬瓦工/" style="font-size: 10px;">搬瓦工</a> <a href="../../../../tags/斗鱼/" style="font-size: 11px;">斗鱼</a> <a href="../../../../tags/日文键盘/" style="font-size: 10px;">日文键盘</a> <a href="../../../../tags/明月永在/" style="font-size: 10px;">明月永在</a> <a href="../../../../tags/最小化/" style="font-size: 10px;">最小化</a> <a href="../../../../tags/权限/" style="font-size: 10px;">权限</a> <a href="../../../../tags/查壳/" style="font-size: 10px;">查壳</a> <a href="../../../../tags/树莓派/" style="font-size: 18px;">树莓派</a> <a href="../../../../tags/桌面/" style="font-size: 10px;">桌面</a> <a href="../../../../tags/水印/" style="font-size: 10px;">水印</a> <a href="../../../../tags/永久链接/" style="font-size: 10px;">永久链接</a> <a href="../../../../tags/浏览器/" style="font-size: 10px;">浏览器</a> <a href="../../../../tags/游戏/" style="font-size: 10px;">游戏</a> <a href="../../../../tags/烧录/" style="font-size: 10px;">烧录</a> <a href="../../../../tags/用户管理/" style="font-size: 10px;">用户管理</a> <a href="../../../../tags/监听/" style="font-size: 10px;">监听</a> <a href="../../../../tags/目录/" style="font-size: 11px;">目录</a> <a href="../../../../tags/科学上网/" style="font-size: 10px;">科学上网</a> <a href="../../../../tags/移动硬盘/" style="font-size: 10px;">移动硬盘</a> <a href="../../../../tags/窗口/" style="font-size: 10px;">窗口</a> <a href="../../../../tags/站内链接/" style="font-size: 10px;">站内链接</a> <a href="../../../../tags/系统/" style="font-size: 10px;">系统</a> <a href="../../../../tags/紧急模式/" style="font-size: 10px;">紧急模式</a> <a href="../../../../tags/网络/" style="font-size: 10px;">网络</a> <a href="../../../../tags/置顶/" style="font-size: 10px;">置顶</a> <a href="../../../../tags/脚本/" style="font-size: 10px;">脚本</a> <a href="../../../../tags/花生壳/" style="font-size: 10px;">花生壳</a> <a href="../../../../tags/英文键盘/" style="font-size: 10px;">英文键盘</a> <a href="../../../../tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="../../../../tags/调试/" style="font-size: 10px;">调试</a> <a href="../../../../tags/赚钱宝/" style="font-size: 10px;">赚钱宝</a> <a href="../../../../tags/跨平台/" style="font-size: 10px;">跨平台</a> <a href="../../../../tags/软件/" style="font-size: 10px;">软件</a> <a href="../../../../tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="../../../../tags/辅助工具/" style="font-size: 10px;">辅助工具</a> <a href="../../../../tags/迁移/" style="font-size: 10px;">迁移</a> <a href="../../../../tags/远程/" style="font-size: 10px;">远程</a> <a href="../../../../tags/错误/" style="font-size: 10px;">错误</a> <a href="../../../../tags/键位/" style="font-size: 10px;">键位</a> <a href="../../../../tags/键盘/" style="font-size: 11px;">键盘</a> <a href="../../../../tags/键盘模拟/" style="font-size: 10px;">键盘模拟</a> <a href="../../../../tags/防火墙/" style="font-size: 10px;">防火墙</a> <a href="../../../../tags/随笔/" style="font-size: 12px;">随笔</a> <a href="../../../../tags/音乐/" style="font-size: 10px;">音乐</a> <a href="../../../../tags/饥荒/" style="font-size: 10px;">饥荒</a> <a href="../../../../tags/鼠标/" style="font-size: 11px;">鼠标</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://michael728.github.io/">Michael翔</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="../../../../index.html" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 节约用爱</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'leave-us-alone';
+    
+    
+    var disqus_url = 'http://www.wuliaole.com/2016/05/26/working_on_raspberry_pi/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="../../../../libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="../../../../libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="../../../../js/main.js"></script>
+
+    </div>
+</body>
+</html>

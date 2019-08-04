@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>从WordPress迁移到Hexo | 无聊小博</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="mac,node.js,npm,Hexo,WordPress,迁移,windows">
+    
+    <meta name="description" content="FOOLMAN喜欢简单的东西，有时候为了达到一个简单目标，却需要经历复杂无比的过程  文章更新 20160310-初次成文 20160704-已经过去了4个月，更新了MAC下的Hexo安装方法 20160808-修改完善mac下的安装办法和步骤 20160902-增加了错误排查以及如何更换HEXO模板的内容  为什么会有这篇文章WordPress确实是个优秀的博客系统，但是却越来越臃肿，平心而论">
+<meta name="keywords" content="mac,node.js,npm,Hexo,WordPress,迁移,windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从WordPress迁移到Hexo">
+<meta property="og:url" content="http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/index.html">
+<meta property="og:site_name" content="无聊小博">
+<meta property="og:description" content="FOOLMAN喜欢简单的东西，有时候为了达到一个简单目标，却需要经历复杂无比的过程  文章更新 20160310-初次成文 20160704-已经过去了4个月，更新了MAC下的Hexo安装方法 20160808-修改完善mac下的安装办法和步骤 20160902-增加了错误排查以及如何更换HEXO模板的内容  为什么会有这篇文章WordPress确实是个优秀的博客系统，但是却越来越臃肿，平心而论">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/gitbashhere.jpg">
+<meta property="og:updated_time" content="2018-10-11T15:31:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从WordPress迁移到Hexo">
+<meta name="twitter:description" content="FOOLMAN喜欢简单的东西，有时候为了达到一个简单目标，却需要经历复杂无比的过程  文章更新 20160310-初次成文 20160704-已经过去了4个月，更新了MAC下的Hexo安装方法 20160808-修改完善mac下的安装办法和步骤 20160902-增加了错误排查以及如何更换HEXO模板的内容  为什么会有这篇文章WordPress确实是个优秀的博客系统，但是却越来越臃肿，平心而论">
+<meta name="twitter:image" content="http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/gitbashhere.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="无聊小博" type="application/atom+xml">
+    
+
+    
+
+    <link rel="stylesheet" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="../../../../libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="../../../../css/style.css">
+
+    <script src="../../../../libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="../../../../libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="../../../../libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-144170558-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?0b9af06e21a88c60dc3deb5b699a3e63";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="../../../../index.html" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Keep studying</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../index.html">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/CentOS/">CentOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/基础/">基础</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/MacOS/">MacOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/折腾/">折腾</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/效率/">效率</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/日常使用/">日常使用</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/">树莓派</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/入门/">入门</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/编程/">编程</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '../../../../content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="../../../../js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="../../../../categories/Hexo/">Hexo</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="../../../../categories/Hexo/基础/">基础</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-20160310-从WORDPRESS迁移到HEXO" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        从WordPress迁移到Hexo
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="" class="article-date">
+            <time datetime="2016-03-10T11:56:40.000Z" itemprop="datePublished">2016-03-10</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="../../../../tags/Hexo/">Hexo</a>, <a class="tag-link" href="../../../../tags/WordPress/">WordPress</a>, <a class="tag-link" href="../../../../tags/mac/">mac</a>, <a class="tag-link" href="../../../../tags/node-js/">node.js</a>, <a class="tag-link" href="../../../../tags/npm/">npm</a>, <a class="tag-link" href="../../../../tags/windows/">windows</a>, <a class="tag-link" href="../../../../tags/迁移/">迁移</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>FOOLMAN喜欢简单的东西，有时候为了达到一个简单目标，却需要经历复杂无比的过程</p>
+</blockquote>
+<h2 id="文章更新"><a href="#文章更新" class="headerlink" title="文章更新"></a>文章更新</h2><ol>
+<li>20160310-初次成文</li>
+<li>20160704-已经过去了4个月，更新了MAC下的Hexo安装方法</li>
+<li>20160808-修改完善mac下的安装办法和步骤</li>
+<li>20160902-增加了错误排查以及如何更换HEXO模板的内容</li>
+</ol>
+<h2 id="为什么会有这篇文章"><a href="#为什么会有这篇文章" class="headerlink" title="为什么会有这篇文章"></a>为什么会有这篇文章</h2><p>WordPress确实是个优秀的博客系统，但是却越来越臃肿，平心而论，如果身在墙外，肯定会一直用下去，谁想天天没事瞎折腾呢。然而，WP却变得越来越臃肿，插件总需要升级，功能还要和PHP以及LINUX不停的大叫道，经常的头大。</p>
+<p>这两天自己的WordPress博客再次无缘无故打不开了，即便装了<code>Disable Google Font</code>插件也是没有改善，用Chrome的开发者工具也没发现什么不妥，虽然有处女[座]情节的我应该一究到底，但是还是觉得KEEP THINGS SIMPLE比较重要，陷在复杂的事情里面，自己也变得复杂了。</p>
+<p>在网上逛久了额，不经意间总会看到一些博客下面写着一句话“由Hexo强力驱动”！当时就心想，这是什么鬼？？不过也没多想。</p>
+<p>然而，当这两天WordPress再次无法打开之后，还是决定换个博客系统吧，经过gogole，大概知道Hexo是什么，纯静态博客，一番了解之后，简约不简单，如此概括。</p>
+<blockquote>
+<p>今天在上班的路上我还在想，也许过不了多久，Hexo也会同样变得臃肿，也许就有另外一种更加简单的博客框架出现，不过管他呢，折腾一下没坏处。</p>
+</blockquote>
+<p>先说这个HEXO，其实建立博客的并不是唯一的方案，其他还有Ghost和其一些方案。Hexo只是因为他的简单，简洁，比较流行，大家可以自由选择其他方式搭建自己的静态博客，静态有什么好的？速度飞快！还有呢？这个理由还不够么？</p>
+<blockquote>
+<p>我喜欢写流水账似的记录，因为我觉得只有自己消化了的东西，写出来的心得，才能是精华，才值得记录。</p>
+</blockquote>
+<p>可能自己写作习惯不好，经常偷懒，很多东西就算记下来了，也是随手扔在印象笔记中，懒得整理了。不过既然有了这个契机，可以适当将笔记中的资料整理一下写成博客。</p>
+<h2 id="如何在Windows系统上安装Hexo"><a href="#如何在Windows系统上安装Hexo" class="headerlink" title="如何在Windows系统上安装Hexo"></a>如何在Windows系统上安装Hexo</h2><p>Hexo本身就是一个由 Node.js 驱动的框架，N多包（至少我这样认为），可以识别 Markdown 格式，并且转换为HTML页面，这样，就可以借助GitHub或者Coding.ne的Pages服务，来展示站点内容，不但安全性一流，还能利用Github或者Coding.net这些大站的速度，还有一点，免费不操心。</p>
+<p>在电脑上要装的，主要是 Git 和 Node.js 这两个工具。</p>
+<h3 id="安装GIT"><a href="#安装GIT" class="headerlink" title="安装GIT"></a>安装GIT</h3><p>去<a href="https://git-scm.com" target="_blank" rel="noopener">Git for Windows官网</a>下载并安装。</p>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>去<a href="https://nodejs.org" target="_blank" rel="noopener">Node.js官网</a>下载并安装。</p>
+<p>注意：初次折腾，尽量使用默认路径，并且避免路径中出现中文字。</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>上面两个都是软件，下载了即可，我下载的Git版本是2.7.2 64位，Node.js是5.8.0 稳定版，也是64位版本的。</p>
+<p>安装好了这两个软件之后，在你的硬盘上，新建一个目录，作为你Hexo博客的仓库，我这里是f:\Hexo，然后进去这个目录，点右键，选择<code>Git Bash Here</code></p>
+<p><img src="/2016/03/10/from_wordpress_to_Hexo/gitbashhere.jpg" alt="Git Bash Here"></p>
+<p><img src="/2016/03/10/from_wordpress_to_Hexo/hellothegit.jpg" alt="Hello the Git"></p>
+<p>如果你熟悉Windows的CMD工具，那么你对GitBahsh的界面一定不会陌生，这其实是个linux下的命令行工具，因为linux下默认就是这样，可能你会兴奋，也许你会感觉郁闷，不过没办法，硬着头皮，跟着我一步一步做下去吧。</p>
+<p>然后，在这个窗口输入下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli <span class="comment">#-g表示全局安装</span></span><br></pre></td></tr></table></figure>
+
+<p>先不解释什么时候npm，先说这句命令，可能会运行很长时间，如果你觉得出错了，可以用<code>CTRL+C</code>来结束，不过更靠谱的，是加一个<code>--verbose</code>参数，变成这样，这样你就可以看到整个安装过程了，这命令对于其他命令也适用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli --verbose</span><br></pre></td></tr></table></figure>
+
+<p>这里分享一个小插曲，我在WIN10系统上安装的，所以遇到了两个WARN信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm WARN optional Skipping failed optional dependency /browser-sync/chokidar/fsevents:                            </span><br><span class="line">npm WARN notsup Not compatible with your operating system or architecture: fsevents@1.0.8</span><br></pre></td></tr></table></figure>
+
+<p>解释：fsevent是mac osx系统的，所以在windows系统下会遇到这个警告，忽略即可（更新：我后来在MAC上安装的过程中，也看到过类似的WARN，所以。。。谣言不靠谱）。</p>
+<p>好了，Hexo安装完成后，使用<code>mkdir folder</code>命令建立一个用来存放hexo的目录，进入该目录，并且输入下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hexo init</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意，如果你不是第一次安装，而是要在其他PC或者MAC上同步之前的环境，跳过上面这句。</p>
+</blockquote>
+<p>然后进入你创建的目录，输入 <code>npm install</code>，让npm安装Hexo依赖环境，就是只装必要的文件，其他Hexo的完整包，还在npm的全局那呢，记得么？这点比较重要哦。</p>
+<p>好了，如果你输入<code>Hexo -v</code>查看Hexo版本可以看到结果，说明Hexo安装完毕。</p>
+<h3 id="启动Hexo服务器"><a href="#启动Hexo服务器" class="headerlink" title="启动Hexo服务器"></a>启动Hexo服务器</h3><p>一句话</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hexo server</span><br></pre></td></tr></table></figure>
+
+<p>或者缩写成<code>Hexo s</code>也一样。然后，你的界面会变成下面这样</p>
+<p><img src="/2016/03/10/from_wordpress_to_Hexo/Hexoserver.jpg" alt="Hexo Server"></p>
+<p>这个界面不会再出现提示符$了，因为服务一直运行着，除非你按了<code>CTRL+C</code>。</p>
+<p>现在服务已经好了，准备开始写你的一篇博客吧。</p>
+<h3 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h3><p>继续上面的说，当你的Hexo服务运行之后，那个窗口不要关闭，因为你关闭了，也就等同于<code>CTRL+C</code>关闭了Hexo服务。</p>
+<p>如果关闭了Hexo服务，请重新在Hexo目录右键选择Git Hash Here，重新开一个Git窗口。</p>
+<p>输入下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hexo new <span class="string">"你的第一篇博客"</span></span><br></pre></td></tr></table></figure>
+
+<p>后面括号里是你的日志的名字，可以是中文或者英文，如果有空格，也没问题。输入这个命令之后，去Hexo目录下，找source目录，里面有一个_post目录，打开就能看到你的日志了，就是一个文本文件。</p>
+<p>你可以用任何编辑器编辑这个文件，比如记事本、Notepad++、Sublime Text等等，我之前喜欢用Notepad++，现在转用了Sublime Text 3，因为后者好像作为Markdown标记的编辑器更为方便一些。</p>
+<p>这时候，如果你打开浏览器，输入 <code>http://localhost:4000</code>，就可以看到你的博客了。</p>
+<p>说起来用Markdown标记写博客，还是有很多需要学习的地方，我刚开始的时候，很简单粗暴，打开这个<a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="noopener">作业部落</a>的在线Markdown编辑器放在一边，一边参考，一边学习他的标记符号。</p>
+<p><img src="/2016/03/10/from_wordpress_to_Hexo/zuoyebuluomarkdown.jpg" alt="作业部落的Markdown实例页面"></p>
+<h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hexo <span class="built_in">help</span> <span class="comment">#查看帮助</span></span><br><span class="line">Hexo init <span class="comment">#初始化一个目录</span></span><br><span class="line">Hexo new <span class="string">"postName"</span> <span class="comment">#新建文章，可以缩写为hexo n</span></span><br><span class="line">Hexo new page <span class="string">"pageName"</span> <span class="comment">#新建页面</span></span><br><span class="line">Hexo generate <span class="comment">#生成网页，可以在 public 目录查看整个网站的文件，可以缩写为hexo g</span></span><br><span class="line">Hexo server <span class="comment">#本地预览，'Ctrl+C'关闭，可以缩写为hexo s</span></span><br><span class="line">Hexo deploy <span class="comment">#部署.deploy目录，可以缩写为hexo d</span></span><br><span class="line">Hexo clean <span class="comment">#清除缓存，**建议每次执行命令前先清理缓存，每次部署前先删除 `.deploy` 文件夹**</span></span><br></pre></td></tr></table></figure>
+
+<p>同时Hexo支持命令的组合：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hexo d -g <span class="comment">#先重新生成博客内容，再部署推送到静态空间</span></span><br><span class="line">Hexo s -g <span class="comment">#先重新生成博客内容，再在本地生成服务器，可以进行预览</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在OSX下安装Hexo"><a href="#在OSX下安装Hexo" class="headerlink" title="在OSX下安装Hexo"></a>在OSX下安装Hexo</h2><p>其实，再回头看这个帖子，时间已经过去4个月了，真是有点惭愧了，不过也可以说明，我用Hexo写博客，不知不觉已经这么长时间了。</p>
+<p>好了，废话不多说，直接进入正题。</p>
+<h3 id="使用Homebrew安装node"><a href="#使用Homebrew安装node" class="headerlink" title="使用Homebrew安装node"></a>使用Homebrew安装node</h3><p>MAC下的使用，绕了很多弯路，从最开始用Node.js的安装包安装Node，到现在使用Homebrew来安装，变化很大。也让我对linux系统越来越有好感。</p>
+<p>好了，废话不多说，先从homebrew安装Node.js开始，Node.js自带npm。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install node.js</span><br></pre></td></tr></table></figure>
+
+<p>如果上面的命令错误，说明你还没有在mac下安装过Homebrew，如何安装Homebrew以及常用brew命令，请移步<a href="http://www.wuliaole.com/post/the_tutorial_101_of_homebrew_on_mac">这里</a></p>
+<p><del>需要注意的是，Hexo的安装位置我是装在了/usr/local/lib/node_modules下，才安装成功的。其实这个位置，我现在还是有点疑惑，因为对那些Link产生的文件，连接的对象还不是很明白。</del></p>
+<p><del>cd /usr/local/lib/node_modules</del><br><del>npm install Hexo -no-option</del></p>
+<h3 id="安装Hexo-cli"><a href="#安装Hexo-cli" class="headerlink" title="安装Hexo-cli"></a>安装Hexo-cli</h3><p>npm安装好之后，那些warn不用理会，直接安装Hexo，命令也是一句话。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install Hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>然后通过命令，<code>Hexo -v</code>，如果看到了hexo的版本号，说明安装成功。</p>
+<h2 id="Hexo主题、插件以及其他内容"><a href="#Hexo主题、插件以及其他内容" class="headerlink" title="Hexo主题、插件以及其他内容"></a>Hexo主题、插件以及其他内容</h2><p>Hexo的安装并不麻烦，基本就是需要Node.js、NPM、GIT这几样东西，在Mac因为是原生linux系统，所以问题不大，而Windows 10也自带bash了，虽然对中文目前支持非常稀烂，但是未来应该有所期待。并且其实Windows下的linux shell也非常多，比如babun，cygwin等，而且上文介绍安装过程中，涉及的<a href="https://nodejs.org" target="_blank" rel="noopener">Node.js官网</a>安装后，也带了一个bash shell。好了，废话不多说了，继续说hexo使用过程中的一些其他需要注意的问题。</p>
+<p>先建立一个目录，然后进去，这里有一点需要说明的是，如果你是第一次使用Hexo写博客，使用命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hexo init foldername <span class="comment">#建立的Hexo文件夹名字</span></span><br></pre></td></tr></table></figure>
+
+<p>然而如果你是为了同步其他电脑上的Hexo博客内容，直接建立一个空目录，并且不要执行 <code>hexo init</code> 操作，否则Hexo会将其初始化，并且无法继续同步其他内容了。</p>
+<h3 id="Hexo安装主题"><a href="#Hexo安装主题" class="headerlink" title="Hexo安装主题"></a>Hexo安装主题</h3><p>上面步骤二选一，然后继续</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://git.coding.net/tinyvane/Hexo.git foldername <span class="comment">#这里更改成你远程hexo仓库的名字</span></span><br><span class="line"><span class="built_in">cd</span> foldername</span><br><span class="line"><span class="comment">#让npm安装必要的Hexo组件</span></span><br><span class="line">npm install</span><br><span class="line"><span class="comment">#安装Hexo-deployer-git ，部署Hexo用</span></span><br><span class="line">npm install Hexo-deployer-git </span><br><span class="line"><span class="comment">#（可选）安装 Hexo-asset-image 和模板，确认 _config.yml 中 `post_asset_folder:true` 。</span></span><br><span class="line">npm install hexo-asset-image --save</span><br><span class="line"><span class="comment">#使用submodule的方式添加next主题</span></span><br><span class="line">git submodule add https://github.com/iissnan/Hexo-theme-next themes/next</span><br><span class="line"><span class="comment">#或者其他主题</span></span><br><span class="line">git submodule add https://github.com/tinyvane2/hexo-theme-hueman.git themes/hueman <span class="comment">#https方式</span></span><br><span class="line"></span><br><span class="line">git submodule add git@github.com:tinyvane2/hexo-theme-hueman.git themes/hueman <span class="comment">#ssh方式，二选一</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果遇到了错误<code>Receiving “fatal: Not a git repository” when attempting to remote add a Git repo</code>，说明当前目录还不是一个由GIT管理的项目，请先使用命令<code>git init .</code>对当前项目进行初始化。</p>
+</blockquote>
+<p>如果要了解更多关于多终端同步Hexo更新博客，请参考我的另外一个帖子，地址在<a href="http://www.wuliaole.com/post/sync_Hexo_among_different_clients">这里</a>。</p>
+<h2 id="Hexo-更换主题"><a href="#Hexo-更换主题" class="headerlink" title="Hexo 更换主题"></a>Hexo 更换主题</h2><p>hexo默认带的主题是landscape，像极了WordPress的默认主题，因此，我非常有冲动要换一个。</p>
+<h3 id="有哪些主题可以让你选择？"><a href="#有哪些主题可以让你选择？" class="headerlink" title="有哪些主题可以让你选择？"></a>有哪些主题可以让你选择？</h3><p>知乎上有一个帖子，统计了很多的高星Hexo主题，详情戳<a href="http://www.zhihu.com/question/24422335" target="_blank" rel="noopener">这里</a></p>
+<p>我之前使用的是iissnan的Next主题，目前使用的ppoffice的hueman主题。</p>
+<h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><ul>
+<li><p>Next主题</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>或者 Hueman主题</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ppoffice/hexo-theme-hueman.git themes/hueman</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>然后修改<code>站点配置</code>（hexo主目录下的<code>config.yml</code>文件），将<code>theme: landscape</code>修改为<code>theme: hueman</code>或者<code>theme: next</code></p>
+<h3 id="主题生效"><a href="#主题生效" class="headerlink" title="主题生效"></a>主题生效</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g <span class="comment">#清理文件并且生成文件</span></span><br><span class="line">hexo s <span class="comment">#本地运行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="几个插件"><a href="#几个插件" class="headerlink" title="几个插件"></a>几个插件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install Hexo-deployer-git #Hexo-deployer-git ，部署Hexo用</span><br><span class="line">npm install hexo-asset-image --save #Hexo-asset-image 和模板，确保主题配置文件中`post_asset_folder`选项为`true`</span><br><span class="line">npm install hexo-generator-json-content -S #Hueman主题中的insight search（站内搜索）功能必备插件</span><br><span class="line">npm install hexo-baidu-url-submit --save #百度链接生产插件</span><br></pre></td></tr></table></figure>
+
+<p>PS: 需要注意的是，<code>hexo-baidu-url-submit</code>和<code>hexo-generator-json-content</code>两个插件如果直接安装，而没有安装相应的主题，会导致hexo错误，而无法正常执行，请注意。</p>
+<p>然后浏览器中输入地址<code>localhost:4000</code>就可以看到新主题已经使用上了。</p>
+<p>说简单不简单，这里有个坑，如果执行了上面的语句，访问localhost发现主题还是默认的，关掉服务器的那个shell，再重新打开，输入<code>hexo -s debug</code>，然后再次访问<code>localhost:4000</code>，应该就可以看到新主题已经换上了。</p>
+<p>好了，装好了基本的hexo文件了，下面的操作，是我自己的个性设置，大家可以不用理会。因为Hexo的主题配置文件(也是_config.yml)，如果操作用submodule的方式，你是没有办法push到原作者的github库的，所以我将其保存在了主项目的 git 库中，方便保存主题配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp &lt;Hexo folder&gt;/themes/next/_config.yml &lt;Hexo folder&gt;/_config_theme.yml</span><br><span class="line"><span class="built_in">cd</span> themes/next</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">'overwrite the _config.yml files from Hexo repo'</span></span><br><span class="line"><span class="built_in">cd</span> ../..</span><br></pre></td></tr></table></figure>
+
+<p>如果要了解更多关于多终端同步Hexo更新博客，请参考我的另外一个帖子，地址在<a href="http://www.wuliaole.com/post/sync_Hexo_among_different_clients">这里</a>。</p>
+<h3 id="Hexo-更换主题-1"><a href="#Hexo-更换主题-1" class="headerlink" title="Hexo 更换主题"></a>Hexo 更换主题</h3><p>hexo默认带的主题是landscape，像极了WordPress的默认主题，因此，我非常有冲动要换一个。</p>
+<h2 id="有哪些主题可以让你选择？-1"><a href="#有哪些主题可以让你选择？-1" class="headerlink" title="有哪些主题可以让你选择？"></a>有哪些主题可以让你选择？</h2><p>我还是在知乎上看到了帖子，详情请戳<a href="http://www.zhihu.com/question/24422335" target="_blank" rel="noopener">这里</a></p>
+<p>我这里演示的iissnan的hexo-theme-next主题。至于其他的，自己选吧。</p>
+<h2 id="将主题从远程下载到本地"><a href="#将主题从远程下载到本地" class="headerlink" title="将主题从远程下载到本地"></a>将主题从远程下载到本地</h2><p>开Git，在命令行的地方，输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<p>后面是你存放主题的默认目录，themes是默认的主题文件夹。</p>
+<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>你的默认hexo目录下面，有一个文件叫<code>_config.yml</code>，打开后，会看到一行<code>theme: landscape</code>，注释掉，加上一句</p>
+<p><code>theme: next</code>，这个next要和你themes目录下新下的主题保存的目录名称一致。</p>
+<p>然后，执行下面的语句</p>
+<p>hexo clean &amp;&amp; hexo g</p>
+<p>clean是清理，g是重新生成，然后就可以看到新主题已经使用上了。</p>
+<p>说简单不简单，这里有个坑，如果执行了上面的语句，访问localhost发现主题还是默认的，关掉服务器的那个git，重开git，输入<code>hexo -s debug</code>，然后再次访问<code>localhost:4000</code>，应该就可以看到新主题已经换上了。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://www.wuliaole.com/">Sublime Text 3的使用</a></li>
+<li><a href="http://www.wuliaole.com/">如何使用GitHub Pages免费上传你的Hexo博客</a></li>
+<li><a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html" target="_blank" rel="noopener">代码高亮使用说法</a></li>
+<li><a href="http://iread.io/2015/09/Hexo-guide-2/" target="_blank" rel="noopener">叶阳栩宁的博客</a></li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/" data-id="cjyx47wzz008iisokf1y6kzf2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "节约用爱"
+        },
+        "headline": "从WordPress迁移到Hexo",
+        "image": "http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/gitbashhere.jpg",
+        "keywords": "mac node.js npm Hexo WordPress 迁移 windows",
+        "genre": "Hexo 基础",
+        "datePublished": "2016-03-10",
+        "dateCreated": "2016-03-10",
+        "dateModified": "2018-10-11",
+        "url": "http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/",
+        "description": "
+FOOLMAN喜欢简单的东西，有时候为了达到一个简单目标，却需要经历复杂无比的过程
+
+文章更新
+20160310-初次成文
+20160704-已经过去了4个月，更新了MAC下的Hexo安装方法
+20160808-修改完善mac下的安装办法和步骤
+20160902-增加了错误排查以及如何更换HEXO模板的内容
+
+为什么会有这篇文章WordPress确实是个优秀的博客系统，但是却越来越臃肿，平心而论"
+        "wordCount": 608
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/tinyvane" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="../the_encryption_algorithms_and_implementation/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            网络通信加密算法介绍及C#实现
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="../../../01/14/how_to_tile_all_windows_on_windows_10_pc/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Windows下的awesome让所有窗口平铺沾满桌面的工具bug.n</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/08/04/the_human_way_of_inserting_pics_in_hexo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804230940.png)" alt="HEXO插入图片的BT脑回路" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="title">HEXO插入图片的BT脑回路</a></p>
+                            <p class="item-date"><time datetime="2019-08-04T06:25:01.000Z" itemprop="datePublished">2019-08-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/03/vba_scripts_in_word/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/03/vba_scripts_in_word/" class="title">WORD中的VBA操作</a></p>
+                            <p class="item-date"><time datetime="2019-08-03T06:55:17.000Z" itemprop="datePublished">2019-08-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/07/19/how_does_office365_coexist_with_msi_visio_2016/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804064606.png)" alt="微软即点即用和msi共存的安装方法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="title">微软即点即用和msi共存的安装方法</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T09:13:03.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="title">20190719-shadowsocks支持windows邮件、OFFICE登陆翻墙</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T05:11:23.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/common_used_git_commands/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/common_used_git_commands/" class="title">201907199-常用GIT命令和使用场景</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T04:23:57.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/CentOS/">CentOS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/">Hexo</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/基础/">基础</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Linux/">Linux</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/MacOS/">MacOS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/折腾/">折腾</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/效率/">效率</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/日常使用/">日常使用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/">树莓派</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/入门/">入门</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/编程/">编程</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/07/">七月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/10/">十月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/05/">五月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/08/">八月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/03/">三月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/12/">十二月 2015</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net/">.net</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net-core/">.net core</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/100m宽带/">100m宽带</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/3D建模/">3D建模</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/404/">404</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/C/">C#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/GPT/">GPT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/IMG/">IMG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/M3-bitlocker-loader/">M3 bitlocker loader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MAC/">MAC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MBR/">MBR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MarkDown/">MarkDown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/OSX/">OSX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PC/">PC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/RASPBERRY/">RASPBERRY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Raspberry/">Raspberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Resilio-Sync/">Resilio Sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Sublime-Text-3/">Sublime Text 3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WD/">WD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Winform/">Winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WordPress/">WordPress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Xamarin/">Xamarin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/aliyun/">aliyun</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apple/">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/autocad/">autocad</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bash/">bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bitlocker/">bitlocker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bonjor/">bonjor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bower/">bower</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/brew/">brew</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bt-sync/">bt sync</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/btsync/">btsync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/c/">c#</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos/">centos</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos7/">centos7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/coding-net/">coding.net</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cow/">cow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cp/">cp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/csharp/">csharp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cygwin/">cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/deploy/">deploy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dotnetcore/">dotnetcore</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dropbear/">dropbear</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/edge/">edge</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/electon/">electon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/emergency-mode/">emergency mode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ext4/">ext4</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/firewall/">firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/formula/">formula</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ghost/">ghost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/git/">git</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/github/">github</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gz/">gz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hexo/">hexo</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs/">hfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs-for-Windows/">hfs for Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/homebrew/">homebrew</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hook/">hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ie/">ie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/karabiner/">karabiner</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchagents/">launchagents</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchdaemon/">launchdaemon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/linux/">linux</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ln/">ln</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mac/">mac</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/macOS/">macOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mklink/">mklink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mouse/">mouse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/msi/">msi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mv/">mv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ngrok/">ngrok</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/node-js/">node.js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/npm/">npm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/office/">office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/oh-my-zsh/">oh-my-zsh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openvpn/">openvpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/opernwrt/">opernwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/osx/">osx</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/pc/">pc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php-fpm/">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/progon/">progon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rapsberry/">rapsberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry/">raspberry</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry-pi/">raspberry pi</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspbian/">raspbian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/redhat/">redhat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/repo/">repo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resilio-sync/">resilio sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resiliosync/">resiliosync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/responsity/">responsity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rhel/">rhel</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rm/">rm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rpm/">rpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rsa/">rsa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/runtime/">runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/screen/">screen</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sdk/">sdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shadowsocks/">shadowsocks</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shell/">shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shortcuts/">shortcuts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sketchup/">sketchup</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/socks5/">socks5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ssh/">ssh</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/symlink/">symlink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/syncthing/">syncthing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/synergy/">synergy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/tar/">tar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/thinkphp/">thinkphp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/uac/">uac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vba/">vba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vim/">vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visio/">visio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visual-studio/">visual studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vpn/">vpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vs/">vs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vscode/">vscode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wifi/">wifi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows/">windows</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows-10/">windows 10</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows10/">windows10</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/winform/">winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wireshark/">wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/word/">word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wordpress/">wordpress</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xamarin/">xamarin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xampp/">xampp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xdebug/">xdebug</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/yum/">yum</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/代码/">代码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/低落/">低落</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/作业/">作业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光猫/">光猫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光纤/">光纤</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/共享/">共享</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/分类/">分类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/加密/">加密</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/北京联通/">北京联通</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/升级/">升级</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/华为/">华为</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/单曲循环/">单曲循环</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/博客/">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/双击/">双击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反向代理/">反向代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反编译/">反编译</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/右键菜单/">右键菜单</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/同步/">同步</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/启动/">启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/喝酒/">喝酒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/图片/">图片</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/平铺/">平铺</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/开发/">开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/弹幕/">弹幕</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/微信/">微信</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/快捷键/">快捷键</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/截图/">截图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/技巧/">技巧</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/抓包/">抓包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/提速/">提速</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/插件/">插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/搬瓦工/">搬瓦工</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/斗鱼/">斗鱼</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/日文键盘/">日文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/明月永在/">明月永在</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/最小化/">最小化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/权限/">权限</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/查壳/">查壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/树莓派/">树莓派</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/桌面/">桌面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/水印/">水印</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/永久链接/">永久链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/浏览器/">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/烧录/">烧录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/用户管理/">用户管理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/监听/">监听</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/目录/">目录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/科学上网/">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/移动硬盘/">移动硬盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/窗口/">窗口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/站内链接/">站内链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/系统/">系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/紧急模式/">紧急模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/置顶/">置顶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/脚本/">脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/花生壳/">花生壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/英文键盘/">英文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/调试/">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/赚钱宝/">赚钱宝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/跨平台/">跨平台</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件/">软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件使用/">软件使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/辅助工具/">辅助工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/迁移/">迁移</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/远程/">远程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/错误/">错误</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键位/">键位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘/">键盘</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘模拟/">键盘模拟</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/随笔/">随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/音乐/">音乐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/饥荒/">饥荒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/鼠标/">鼠标</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="../../../../tags/net/" style="font-size: 12px;">.net</a> <a href="../../../../tags/net-core/" style="font-size: 10px;">.net core</a> <a href="../../../../tags/100m宽带/" style="font-size: 10px;">100m宽带</a> <a href="../../../../tags/3D建模/" style="font-size: 10px;">3D建模</a> <a href="../../../../tags/404/" style="font-size: 10px;">404</a> <a href="../../../../tags/C/" style="font-size: 10px;">C#</a> <a href="../../../../tags/FTP/" style="font-size: 10px;">FTP</a> <a href="../../../../tags/GPT/" style="font-size: 10px;">GPT</a> <a href="../../../../tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="../../../../tags/IMG/" style="font-size: 10px;">IMG</a> <a href="../../../../tags/Linux/" style="font-size: 10px;">Linux</a> <a href="../../../../tags/M3-bitlocker-loader/" style="font-size: 10px;">M3 bitlocker loader</a> <a href="../../../../tags/MAC/" style="font-size: 11px;">MAC</a> <a href="../../../../tags/MBR/" style="font-size: 10px;">MBR</a> <a href="../../../../tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="../../../../tags/OSX/" style="font-size: 10px;">OSX</a> <a href="../../../../tags/PC/" style="font-size: 10px;">PC</a> <a href="../../../../tags/PHP/" style="font-size: 10px;">PHP</a> <a href="../../../../tags/RASPBERRY/" style="font-size: 10px;">RASPBERRY</a> <a href="../../../../tags/Raspberry/" style="font-size: 10px;">Raspberry</a> <a href="../../../../tags/Resilio-Sync/" style="font-size: 10px;">Resilio Sync</a> <a href="../../../../tags/Sublime-Text-3/" style="font-size: 10px;">Sublime Text 3</a> <a href="../../../../tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="../../../../tags/Vim/" style="font-size: 10px;">Vim</a> <a href="../../../../tags/Vimium/" style="font-size: 10px;">Vimium</a> <a href="../../../../tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="../../../../tags/WD/" style="font-size: 10px;">WD</a> <a href="../../../../tags/Winform/" style="font-size: 10px;">Winform</a> <a href="../../../../tags/WordPress/" style="font-size: 10px;">WordPress</a> <a href="../../../../tags/Xamarin/" style="font-size: 10px;">Xamarin</a> <a href="../../../../tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="../../../../tags/apache/" style="font-size: 10px;">apache</a> <a href="../../../../tags/apple/" style="font-size: 10px;">apple</a> <a href="../../../../tags/autocad/" style="font-size: 10px;">autocad</a> <a href="../../../../tags/bash/" style="font-size: 10px;">bash</a> <a href="../../../../tags/bitlocker/" style="font-size: 10px;">bitlocker</a> <a href="../../../../tags/bonjor/" style="font-size: 10px;">bonjor</a> <a href="../../../../tags/bower/" style="font-size: 10px;">bower</a> <a href="../../../../tags/brew/" style="font-size: 11px;">brew</a> <a href="../../../../tags/bt-sync/" style="font-size: 11px;">bt sync</a> <a href="../../../../tags/btsync/" style="font-size: 10px;">btsync</a> <a href="../../../../tags/c/" style="font-size: 15px;">c#</a> <a href="../../../../tags/centos/" style="font-size: 18px;">centos</a> <a href="../../../../tags/centos7/" style="font-size: 10px;">centos7</a> <a href="../../../../tags/chrome/" style="font-size: 10px;">chrome</a> <a href="../../../../tags/coding-net/" style="font-size: 10px;">coding.net</a> <a href="../../../../tags/cow/" style="font-size: 10px;">cow</a> <a href="../../../../tags/cp/" style="font-size: 10px;">cp</a> <a href="../../../../tags/cron/" style="font-size: 10px;">cron</a> <a href="../../../../tags/crontab/" style="font-size: 10px;">crontab</a> <a href="../../../../tags/csharp/" style="font-size: 11px;">csharp</a> <a href="../../../../tags/cygwin/" style="font-size: 10px;">cygwin</a> <a href="../../../../tags/deploy/" style="font-size: 10px;">deploy</a> <a href="../../../../tags/dotnetcore/" style="font-size: 10px;">dotnetcore</a> <a href="../../../../tags/dropbear/" style="font-size: 10px;">dropbear</a> <a href="../../../../tags/edge/" style="font-size: 10px;">edge</a> <a href="../../../../tags/electon/" style="font-size: 10px;">electon</a> <a href="../../../../tags/emergency-mode/" style="font-size: 10px;">emergency mode</a> <a href="../../../../tags/ext4/" style="font-size: 10px;">ext4</a> <a href="../../../../tags/firewall/" style="font-size: 10px;">firewall</a> <a href="../../../../tags/formula/" style="font-size: 10px;">formula</a> <a href="../../../../tags/ghost/" style="font-size: 10px;">ghost</a> <a href="../../../../tags/git/" style="font-size: 17px;">git</a> <a href="../../../../tags/github/" style="font-size: 13px;">github</a> <a href="../../../../tags/gz/" style="font-size: 10px;">gz</a> <a href="../../../../tags/hexo/" style="font-size: 19px;">hexo</a> <a href="../../../../tags/hfs/" style="font-size: 10px;">hfs</a> <a href="../../../../tags/hfs-for-Windows/" style="font-size: 10px;">hfs for Windows</a> <a href="../../../../tags/homebrew/" style="font-size: 13px;">homebrew</a> <a href="../../../../tags/hook/" style="font-size: 10px;">hook</a> <a href="../../../../tags/ie/" style="font-size: 10px;">ie</a> <a href="../../../../tags/karabiner/" style="font-size: 10px;">karabiner</a> <a href="../../../../tags/launchagents/" style="font-size: 11px;">launchagents</a> <a href="../../../../tags/launchdaemon/" style="font-size: 10px;">launchdaemon</a> <a href="../../../../tags/linux/" style="font-size: 18px;">linux</a> <a href="../../../../tags/ln/" style="font-size: 10px;">ln</a> <a href="../../../../tags/mac/" style="font-size: 20px;">mac</a> <a href="../../../../tags/macOS/" style="font-size: 10px;">macOS</a> <a href="../../../../tags/mklink/" style="font-size: 10px;">mklink</a> <a href="../../../../tags/mouse/" style="font-size: 10px;">mouse</a> <a href="../../../../tags/msi/" style="font-size: 10px;">msi</a> <a href="../../../../tags/mv/" style="font-size: 10px;">mv</a> <a href="../../../../tags/mysql/" style="font-size: 12px;">mysql</a> <a href="../../../../tags/nginx/" style="font-size: 11px;">nginx</a> <a href="../../../../tags/ngrok/" style="font-size: 10px;">ngrok</a> <a href="../../../../tags/node-js/" style="font-size: 12px;">node.js</a> <a href="../../../../tags/npm/" style="font-size: 12px;">npm</a> <a href="../../../../tags/office/" style="font-size: 10px;">office</a> <a href="../../../../tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="../../../../tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="../../../../tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="../../../../tags/opernwrt/" style="font-size: 10px;">opernwrt</a> <a href="../../../../tags/osx/" style="font-size: 13px;">osx</a> <a href="../../../../tags/pc/" style="font-size: 12px;">pc</a> <a href="../../../../tags/php/" style="font-size: 16px;">php</a> <a href="../../../../tags/php-fpm/" style="font-size: 11px;">php-fpm</a> <a href="../../../../tags/progon/" style="font-size: 10px;">progon</a> <a href="../../../../tags/rapsberry/" style="font-size: 10px;">rapsberry</a> <a href="../../../../tags/raspberry/" style="font-size: 14px;">raspberry</a> <a href="../../../../tags/raspberry-pi/" style="font-size: 13px;">raspberry pi</a> <a href="../../../../tags/raspbian/" style="font-size: 10px;">raspbian</a> <a href="../../../../tags/redhat/" style="font-size: 10px;">redhat</a> <a href="../../../../tags/repo/" style="font-size: 10px;">repo</a> <a href="../../../../tags/resilio-sync/" style="font-size: 10px;">resilio sync</a> <a href="../../../../tags/resiliosync/" style="font-size: 10px;">resiliosync</a> <a href="../../../../tags/responsity/" style="font-size: 10px;">responsity</a> <a href="../../../../tags/rhel/" style="font-size: 11px;">rhel</a> <a href="../../../../tags/rm/" style="font-size: 10px;">rm</a> <a href="../../../../tags/rpm/" style="font-size: 10px;">rpm</a> <a href="../../../../tags/rsa/" style="font-size: 10px;">rsa</a> <a href="../../../../tags/runtime/" style="font-size: 10px;">runtime</a> <a href="../../../../tags/screen/" style="font-size: 10px;">screen</a> <a href="../../../../tags/sdk/" style="font-size: 10px;">sdk</a> <a href="../../../../tags/shadowsocks/" style="font-size: 14px;">shadowsocks</a> <a href="../../../../tags/shell/" style="font-size: 11px;">shell</a> <a href="../../../../tags/shortcuts/" style="font-size: 10px;">shortcuts</a> <a href="../../../../tags/sketchup/" style="font-size: 10px;">sketchup</a> <a href="../../../../tags/socks5/" style="font-size: 10px;">socks5</a> <a href="../../../../tags/ssh/" style="font-size: 11px;">ssh</a> <a href="../../../../tags/symlink/" style="font-size: 10px;">symlink</a> <a href="../../../../tags/syncthing/" style="font-size: 10px;">syncthing</a> <a href="../../../../tags/synergy/" style="font-size: 10px;">synergy</a> <a href="../../../../tags/tar/" style="font-size: 10px;">tar</a> <a href="../../../../tags/thinkphp/" style="font-size: 10px;">thinkphp</a> <a href="../../../../tags/uac/" style="font-size: 10px;">uac</a> <a href="../../../../tags/vba/" style="font-size: 10px;">vba</a> <a href="../../../../tags/vim/" style="font-size: 10px;">vim</a> <a href="../../../../tags/visio/" style="font-size: 10px;">visio</a> <a href="../../../../tags/visual-studio/" style="font-size: 10px;">visual studio</a> <a href="../../../../tags/vpn/" style="font-size: 10px;">vpn</a> <a href="../../../../tags/vs/" style="font-size: 10px;">vs</a> <a href="../../../../tags/vscode/" style="font-size: 13px;">vscode</a> <a href="../../../../tags/wifi/" style="font-size: 10px;">wifi</a> <a href="../../../../tags/windows/" style="font-size: 13px;">windows</a> <a href="../../../../tags/windows-10/" style="font-size: 10px;">windows 10</a> <a href="../../../../tags/windows10/" style="font-size: 11px;">windows10</a> <a href="../../../../tags/winform/" style="font-size: 10px;">winform</a> <a href="../../../../tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="../../../../tags/word/" style="font-size: 10px;">word</a> <a href="../../../../tags/wordpress/" style="font-size: 11px;">wordpress</a> <a href="../../../../tags/xamarin/" style="font-size: 11px;">xamarin</a> <a href="../../../../tags/xampp/" style="font-size: 10px;">xampp</a> <a href="../../../../tags/xdebug/" style="font-size: 10px;">xdebug</a> <a href="../../../../tags/yum/" style="font-size: 11px;">yum</a> <a href="../../../../tags/代码/" style="font-size: 10px;">代码</a> <a href="../../../../tags/低落/" style="font-size: 10px;">低落</a> <a href="../../../../tags/作业/" style="font-size: 10px;">作业</a> <a href="../../../../tags/光猫/" style="font-size: 10px;">光猫</a> <a href="../../../../tags/光纤/" style="font-size: 10px;">光纤</a> <a href="../../../../tags/共享/" style="font-size: 10px;">共享</a> <a href="../../../../tags/内网穿透/" style="font-size: 10px;">内网穿透</a> <a href="../../../../tags/分类/" style="font-size: 10px;">分类</a> <a href="../../../../tags/加密/" style="font-size: 11px;">加密</a> <a href="../../../../tags/北京联通/" style="font-size: 11px;">北京联通</a> <a href="../../../../tags/升级/" style="font-size: 10px;">升级</a> <a href="../../../../tags/华为/" style="font-size: 10px;">华为</a> <a href="../../../../tags/单曲循环/" style="font-size: 10px;">单曲循环</a> <a href="../../../../tags/博客/" style="font-size: 10px;">博客</a> <a href="../../../../tags/双击/" style="font-size: 10px;">双击</a> <a href="../../../../tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="../../../../tags/反编译/" style="font-size: 12px;">反编译</a> <a href="../../../../tags/右键菜单/" style="font-size: 10px;">右键菜单</a> <a href="../../../../tags/同步/" style="font-size: 13px;">同步</a> <a href="../../../../tags/启动/" style="font-size: 10px;">启动</a> <a href="../../../../tags/喝酒/" style="font-size: 10px;">喝酒</a> <a href="../../../../tags/图片/" style="font-size: 10px;">图片</a> <a href="../../../../tags/安装/" style="font-size: 10px;">安装</a> <a href="../../../../tags/平铺/" style="font-size: 10px;">平铺</a> <a href="../../../../tags/开发/" style="font-size: 10px;">开发</a> <a href="../../../../tags/弹幕/" style="font-size: 10px;">弹幕</a> <a href="../../../../tags/微信/" style="font-size: 10px;">微信</a> <a href="../../../../tags/快捷键/" style="font-size: 13px;">快捷键</a> <a href="../../../../tags/截图/" style="font-size: 10px;">截图</a> <a href="../../../../tags/技巧/" style="font-size: 10px;">技巧</a> <a href="../../../../tags/抓包/" style="font-size: 10px;">抓包</a> <a href="../../../../tags/提速/" style="font-size: 10px;">提速</a> <a href="../../../../tags/插件/" style="font-size: 10px;">插件</a> <a href="../../../../tags/搬瓦工/" style="font-size: 10px;">搬瓦工</a> <a href="../../../../tags/斗鱼/" style="font-size: 11px;">斗鱼</a> <a href="../../../../tags/日文键盘/" style="font-size: 10px;">日文键盘</a> <a href="../../../../tags/明月永在/" style="font-size: 10px;">明月永在</a> <a href="../../../../tags/最小化/" style="font-size: 10px;">最小化</a> <a href="../../../../tags/权限/" style="font-size: 10px;">权限</a> <a href="../../../../tags/查壳/" style="font-size: 10px;">查壳</a> <a href="../../../../tags/树莓派/" style="font-size: 18px;">树莓派</a> <a href="../../../../tags/桌面/" style="font-size: 10px;">桌面</a> <a href="../../../../tags/水印/" style="font-size: 10px;">水印</a> <a href="../../../../tags/永久链接/" style="font-size: 10px;">永久链接</a> <a href="../../../../tags/浏览器/" style="font-size: 10px;">浏览器</a> <a href="../../../../tags/游戏/" style="font-size: 10px;">游戏</a> <a href="../../../../tags/烧录/" style="font-size: 10px;">烧录</a> <a href="../../../../tags/用户管理/" style="font-size: 10px;">用户管理</a> <a href="../../../../tags/监听/" style="font-size: 10px;">监听</a> <a href="../../../../tags/目录/" style="font-size: 11px;">目录</a> <a href="../../../../tags/科学上网/" style="font-size: 10px;">科学上网</a> <a href="../../../../tags/移动硬盘/" style="font-size: 10px;">移动硬盘</a> <a href="../../../../tags/窗口/" style="font-size: 10px;">窗口</a> <a href="../../../../tags/站内链接/" style="font-size: 10px;">站内链接</a> <a href="../../../../tags/系统/" style="font-size: 10px;">系统</a> <a href="../../../../tags/紧急模式/" style="font-size: 10px;">紧急模式</a> <a href="../../../../tags/网络/" style="font-size: 10px;">网络</a> <a href="../../../../tags/置顶/" style="font-size: 10px;">置顶</a> <a href="../../../../tags/脚本/" style="font-size: 10px;">脚本</a> <a href="../../../../tags/花生壳/" style="font-size: 10px;">花生壳</a> <a href="../../../../tags/英文键盘/" style="font-size: 10px;">英文键盘</a> <a href="../../../../tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="../../../../tags/调试/" style="font-size: 10px;">调试</a> <a href="../../../../tags/赚钱宝/" style="font-size: 10px;">赚钱宝</a> <a href="../../../../tags/跨平台/" style="font-size: 10px;">跨平台</a> <a href="../../../../tags/软件/" style="font-size: 10px;">软件</a> <a href="../../../../tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="../../../../tags/辅助工具/" style="font-size: 10px;">辅助工具</a> <a href="../../../../tags/迁移/" style="font-size: 10px;">迁移</a> <a href="../../../../tags/远程/" style="font-size: 10px;">远程</a> <a href="../../../../tags/错误/" style="font-size: 10px;">错误</a> <a href="../../../../tags/键位/" style="font-size: 10px;">键位</a> <a href="../../../../tags/键盘/" style="font-size: 11px;">键盘</a> <a href="../../../../tags/键盘模拟/" style="font-size: 10px;">键盘模拟</a> <a href="../../../../tags/防火墙/" style="font-size: 10px;">防火墙</a> <a href="../../../../tags/随笔/" style="font-size: 12px;">随笔</a> <a href="../../../../tags/音乐/" style="font-size: 10px;">音乐</a> <a href="../../../../tags/饥荒/" style="font-size: 10px;">饥荒</a> <a href="../../../../tags/鼠标/" style="font-size: 11px;">鼠标</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://michael728.github.io/">Michael翔</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="../../../../index.html" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 节约用爱</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'leave-us-alone';
+    
+    
+    var disqus_url = 'http://www.wuliaole.com/2016/03/10/from_wordpress_to_Hexo/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="../../../../libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="../../../../libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="../../../../js/main.js"></script>
+
+    </div>
+</body>
+</html>

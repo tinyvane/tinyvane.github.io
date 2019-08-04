@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>MAC OS系统使用Homebrew配置NGINX PHP和MYSQL | 无聊小博</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="mac,php,homebrew,mysql,nginx,php-fpm">
+    
+    <meta name="description" content="文章更新 20160701-初次成文 20160704-完整配置完成 20160708-整理小错误，理顺一些不通顺的地方 20160815-系统升级到了CAPITAN，一些地方重新修改 20160928-补充PHPMYADMIN的使用注意事项 20161006-补充xDebug和VSCode的配置内容 20170218-修改了一些小错误 20170728-调整Homebrew内容到其他帖子  为什">
+<meta name="keywords" content="mac,php,homebrew,mysql,nginx,php-fpm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MAC OS系统使用Homebrew配置NGINX PHP和MYSQL">
+<meta property="og:url" content="http://www.wuliaole.com/2016/07/01/config_nginx_php_and_mysql_on_mac_using_homebrew/index.html">
+<meta property="og:site_name" content="无聊小博">
+<meta property="og:description" content="文章更新 20160701-初次成文 20160704-完整配置完成 20160708-整理小错误，理顺一些不通顺的地方 20160815-系统升级到了CAPITAN，一些地方重新修改 20160928-补充PHPMYADMIN的使用注意事项 20161006-补充xDebug和VSCode的配置内容 20170218-修改了一些小错误 20170728-调整Homebrew内容到其他帖子  为什">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-11T15:31:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MAC OS系统使用Homebrew配置NGINX PHP和MYSQL">
+<meta name="twitter:description" content="文章更新 20160701-初次成文 20160704-完整配置完成 20160708-整理小错误，理顺一些不通顺的地方 20160815-系统升级到了CAPITAN，一些地方重新修改 20160928-补充PHPMYADMIN的使用注意事项 20161006-补充xDebug和VSCode的配置内容 20170218-修改了一些小错误 20170728-调整Homebrew内容到其他帖子  为什">
+    
+
+    
+        <link rel="alternate" href="/" title="无聊小博" type="application/atom+xml">
+    
+
+    
+
+    <link rel="stylesheet" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="../../../../libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="../../../../css/style.css">
+
+    <script src="../../../../libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="../../../../libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="../../../../libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-144170558-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?0b9af06e21a88c60dc3deb5b699a3e63";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="../../../../index.html" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Keep studying</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../index.html">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/CentOS/">CentOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Hexo/基础/">基础</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/MacOS/">MacOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/折腾/">折腾</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/效率/">效率</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/日常使用/">日常使用</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/">树莓派</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/raspberry/入门/">入门</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="../../../../categories/编程/">编程</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="../../../../about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '../../../../content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="../../../../js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="../../../../categories/折腾/">折腾</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-20160701-MAC-OS系统使用Homebrew配置NGINX-PHP和MYSQL" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        MAC OS系统使用Homebrew配置NGINX PHP和MYSQL
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="" class="article-date">
+            <time datetime="2016-07-01T01:55:44.000Z" itemprop="datePublished">2016-07-01</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="../../../../tags/homebrew/">homebrew</a>, <a class="tag-link" href="../../../../tags/mac/">mac</a>, <a class="tag-link" href="../../../../tags/mysql/">mysql</a>, <a class="tag-link" href="../../../../tags/nginx/">nginx</a>, <a class="tag-link" href="../../../../tags/php/">php</a>, <a class="tag-link" href="../../../../tags/php-fpm/">php-fpm</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="文章更新"><a href="#文章更新" class="headerlink" title="文章更新"></a>文章更新</h2><ol>
+<li>20160701-初次成文</li>
+<li>20160704-完整配置完成</li>
+<li>20160708-整理小错误，理顺一些不通顺的地方</li>
+<li>20160815-系统升级到了CAPITAN，一些地方重新修改</li>
+<li>20160928-补充PHPMYADMIN的使用注意事项</li>
+<li>20161006-补充xDebug和VSCode的配置内容</li>
+<li>20170218-修改了一些小错误</li>
+<li>20170728-调整Homebrew内容到其他帖子</li>
+</ol>
+<h2 id="为什么会有这篇文章"><a href="#为什么会有这篇文章" class="headerlink" title="为什么会有这篇文章"></a>为什么会有这篇文章</h2><p>MAC OS系统下，全部使用Homebrew来配置NGINX, PHP以及MYSQL的文章并不多，所以自己总结了整个安装过程。本文针对EI CAPITAN或者更高的MAC OS版本。<a id="more"></a></p>
+<h2 id="确认Homebrew就绪"><a href="#确认Homebrew就绪" class="headerlink" title="确认Homebrew就绪"></a>确认Homebrew就绪</h2><p>Homebrew的安装可以参见另外一个<a href="http://www.wuliaole.com/post/the_tutorial_101_of_homebrew_on_mac">帖子</a></p>
+<h2 id="删除旧版PHP"><a href="#删除旧版PHP" class="headerlink" title="删除旧版PHP"></a>删除旧版PHP</h2><p>在安装新版PHP之前，首先要删掉系统自带的旧版PHP程序，我的系统是 OSX EI CAPITAN，PHP版本是5.5.38，根据网上的一篇<a href="http://www.cnblogs.com/meixinghao/articles/4681041.html" target="_blank" rel="noopener">文章</a>，写了个脚本</p>
+<p>为了方便，最好先切换到root账户下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /private/etc/               </span><br><span class="line">rm -rf php-fpm.conf.default php.ini php.ini.default</span><br><span class="line"><span class="built_in">cd</span> /usr/bin/               </span><br><span class="line">rm -rf php php-config phpdoc phpize</span><br><span class="line"><span class="built_in">cd</span> /usr/include </span><br><span class="line">rm -rf php</span><br><span class="line"><span class="built_in">cd</span> /usr/lib</span><br><span class="line">rm -rf php</span><br><span class="line"><span class="built_in">cd</span> /usr/sbin               </span><br><span class="line">rm -rf php-fpm</span><br><span class="line"><span class="built_in">cd</span> /usr/share              </span><br><span class="line">rm -rf php</span><br><span class="line"><span class="built_in">cd</span> /usr/share/man/man1         </span><br><span class="line">rm -rf php-config.1 php.1 phpize.1</span><br><span class="line"><span class="built_in">cd</span> /usr/share/man/man8         </span><br><span class="line">rm -rf php-fpm.8</span><br></pre></td></tr></table></figure>
+
+<p>上述操作，在EI CAPITAN之前的MAC版本下执行不会遇到问题，而在EI CAPITAN下会遇到<code>Operation not permitted</code>的权限错误。这是因为自从EI CAPITAN开始，MAC系统默认开启了<code>System Integrity Protection</code>（SIP，系统完整性保护），从而导致用户无法在系统目录下执行操作。</p>
+<p>若要关闭SIP，需重启系统，进入 <code>recover模式</code>（重启之后按住 <code>Command+r</code>），在 <code>工具</code> 中找到 <code>terminal</code> 执行 <code>csrutil disable</code> 命令，然后重启，SIP保护就被关闭了。 </p>
+<h2 id="安装PHP和PHP-FPM"><a href="#安装PHP和PHP-FPM" class="headerlink" title="安装PHP和PHP-FPM"></a>安装PHP和PHP-FPM</h2><p>因为Homebrew的库中的PHP默认没有带PHP-FPM，因此需要首先tap（或者说登记）一个特殊的PHP库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/homebrew-php</span><br></pre></td></tr></table></figure>
+
+<p>更多类库，可以到GITHUB上查看更多，链接戳<a href="https://github.com/Homebrew/" target="_blank" rel="noopener">这里</a></p>
+<p>现在，就可以使用下面命令来安装PHP-FPM了，并且为了保证同时编译MySQL，以及不配置默认的apache，需要使用下面的参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php56 --without-apache --with-fpm --with-mysql</span><br></pre></td></tr></table></figure>
+
+<p>上面的意思就是安装PHP 5.6，不装APACHE，附带FPM以及MYSQL。</p>
+<p>安装时间视网络和机器速度而定，我装了大约半个小时。</p>
+<h3 id="错误：Cannot-find-libz"><a href="#错误：Cannot-find-libz" class="headerlink" title="错误：Cannot find libz"></a>错误：Cannot find libz</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">checking if the location of ZLIB install directory is defined... no</span><br><span class="line">configure: error: Cannot find libz</span><br><span class="line"></span><br><span class="line">READ THIS: https://git.io/brew-troubleshooting</span><br><span class="line">If reporting this issue please do so at (not Homebrew/brew):</span><br><span class="line">  https://github.com/Homebrew/homebrew-php/issues</span><br></pre></td></tr></table></figure>
+
+<p>说明安装程序无法找到libz库，在新的OS系统下，这通常是因为xcode的更新到7或者8之后，缺少命令行工具造成的</p>
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install </span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure>
+
+<p>继续</p>
+<h3 id="错误：insufficient-permission-for-adding-an-object-to-repository-database-git-objects"><a href="#错误：insufficient-permission-for-adding-an-object-to-repository-database-git-objects" class="headerlink" title="错误：insufficient permission for adding an object to repository database .git/objects"></a>错误：insufficient permission for adding an object to repository database .git/objects</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error: insufficient permission for adding an object to repository database .git/objects</span><br><span class="line">fatal: failed to write object</span><br><span class="line">fatal: unpack-objects failed</span><br><span class="line">Error: Fetching /usr/local/Library/Taps/homebrew/homebrew-core failed!</span><br></pre></td></tr></table></figure>
+
+<p>这个错误很典型，在Homebrew的使用过程中很常见，稍微留意就可以知道和上面遇到的错误一样，都是Homebrew缺少某目录的操作权限，可以参考上面的错误处理方式。</p>
+<p>输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) /usr/<span class="built_in">local</span>/Library/Taps/homebrew/</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误：The-brew-link-step-did-not-complete-successfully"><a href="#错误：The-brew-link-step-did-not-complete-successfully" class="headerlink" title="错误：The brew link step did not complete successfully"></a>错误：The brew link step did not complete successfully</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">==&gt; make install</span><br><span class="line">Error: The `brew link` step did not complete successfully</span><br><span class="line">The formula built, but is not symlinked into /usr/local</span><br><span class="line">Could not symlink.</span><br><span class="line">/usr/local/Library/LinkedKegs is not writable.</span><br><span class="line"></span><br><span class="line">You can try again using:</span><br><span class="line">  brew link php56</span><br><span class="line">==&gt; Caveats</span><br><span class="line">The php.ini file can be found in:</span><br><span class="line">    /usr/local/etc/php/<span class="number">5</span>.<span class="number">6</span>/php.ini</span><br></pre></td></tr></table></figure>
+
+<p>按照系统提示，执行 <code>brew link php56</code>，让Homebrew重新链接相应的文件。</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linking /usr/local/Cellar/php56/<span class="number">5</span>.<span class="number">6</span>.<span class="number">23</span>...</span><br><span class="line">Error: Could not symlink .</span><br><span class="line">/usr/local/Library/LinkedKegs is not writable.</span><br></pre></td></tr></table></figure>
+
+<p>还是权限问题，继续 <code>sudo chown -R $(whoami) /usr/local/Library/LinkedKegs</code>，再次执行 <code>brew link php56</code>，搞定，继续。</p>
+<h2 id="PHP-FPM的启动和使用"><a href="#PHP-FPM的启动和使用" class="headerlink" title="PHP-FPM的启动和使用"></a>PHP-FPM的启动和使用</h2><p>好了，终于顺利装好了php56，静下心来看看输出的信息。</p>
+<blockquote>
+<p>需要注意的是，PHP 5.6的安装，连带一起安装了PHP-FPM，这个东西怎么说呢，我自己也不是很理解，可以说是一种替代了FASTCGI的控制器，但是什么是FASTCGI，或者什么是CGI，我也说不清楚，反正就是多了个PHP-FPM。</p>
+</blockquote>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">✩✩✩✩ Extensions ✩✩✩✩</span><br><span class="line"></span><br><span class="line">If you are having issues with custom extension compiling, ensure that</span><br><span class="line">you are using the brew version, by placing /usr/local/bin before /usr/sbin in your PATH:</span><br><span class="line"></span><br><span class="line">      PATH=<span class="string">"/usr/local/bin:$PATH"</span></span><br><span class="line"></span><br><span class="line">PHP56 Extensions will always be compiled against this PHP. Please install them</span><br><span class="line">using --without-homebrew-php to enable compiling against system PHP.</span><br><span class="line"></span><br><span class="line">✩✩✩✩ PHP CLI ✩✩✩✩</span><br><span class="line"></span><br><span class="line">If you wish to swap the PHP you use on the command line, you should add the following to ~/.bashrc,</span><br><span class="line">~/.zshrc, ~/.profile or your shell's equivalent configuration file:</span><br><span class="line"></span><br><span class="line">      export PATH=<span class="string">"$(brew --prefix homebrew/php/php56)/bin:$PATH"</span></span><br><span class="line"></span><br><span class="line">✩✩✩✩ FPM ✩✩✩✩</span><br><span class="line"></span><br><span class="line">To launch php-fpm on startup:</span><br><span class="line">    mkdir -p ~/Library/LaunchAgents</span><br><span class="line">    cp /usr/local/opt/php56/homebrew.mxcl.php56.plist ~/Library/LaunchAgents/</span><br><span class="line">    launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php56.plist</span><br><span class="line"></span><br><span class="line">The control script is located at /usr/local/opt/php56/sbin/php56-fpm</span><br><span class="line"></span><br><span class="line">OS X <span class="number">10</span>.<span class="number">8</span> and newer come with php-fpm pre-installed, to ensure you are using the brew version you need to make sure /usr/local/sbin is before /usr/sbin in your PATH:</span><br><span class="line"></span><br><span class="line">  PATH=<span class="string">"/usr/local/sbin:$PATH"</span></span><br><span class="line"></span><br><span class="line">You may also need to edit the plist to use the correct <span class="string">"UserName"</span>.</span><br><span class="line"></span><br><span class="line">Please note that the plist was called 'homebrew-php.josegonzalez.php56.plist' in old versions of this formula.</span><br><span class="line"></span><br><span class="line">To have launchd start homebrew/php/php56 now and restart at login:</span><br><span class="line">  brew services start homebrew/php/php56</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/php56/<span class="number">5</span>.<span class="number">6</span>.<span class="number">23</span>: <span class="number">330</span> files, 38M, built in <span class="number">5</span> minutes <span class="number">30</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>在最后更新这个帖子的时候，PHP-FPM又更新到了5.6.24。</p>
+<p>大概看了下上面的输出信息，有几个需要注意的地方：</p>
+<ol>
+<li><p>由于MAC OS 10.8或者更新的系统，预装了PHP-FPM，所以如果想使用brew安装的PHP-FPM，需要确保用户目录<code>/usr/local/bin</code>位于系统路径之前(至少要前于 <code>/usr/sbin</code>)，比如执行 <code>PATH=&quot;/usr/local/bin:$PATH&quot;</code></p>
+</li>
+<li><p>如果你希望在BASH或者ZSH的控制台环境下使用PHP命令行工具，需要在<code>.bashrc</code>或者<code>.zshrc</code>文件的最后添加一行 <code>export PATH=&quot;$(brew --prefix homebrew/php/php56)/bin:$PATH&quot;</code></p>
+</li>
+<li><p>如果需要PHP-FPM随系统自启，则依次执行3条命令：</p>
+<ol>
+<li><p><code>mkdir -p ~/Library/LaunchAgents</code> #参数p是根据需要创建中间目录。</p>
+</li>
+<li><p><code>ln -s /usr/local/opt/php56/homebrew.mxcl.php56.plist ~/Library/LaunchAgents/</code>。</p>
+</li>
+<li><p><code>launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php56.plist</code>。关于参数w的用法，我使用<code>man launchctl</code>看了一下，得到了这段解释</p>
+<blockquote>
+<p>Overrides the Disabled key and sets it to false or true for the load and unload subcommands respectively. In previous versions, this option would modify the configuration file. Now the state of the Disabled key is stored elsewhere ondisk in a location that may not be directly manipulated by any process other than launchd.</p>
+</blockquote>
+<p> 意思是说这个参数将改写<code>disable key</code>参数，在加载plist之后将其改写为<code>false</code>，在卸载plist之后将其改写为<code>true</code>。在更早的版本中，使用这个参数将改写服务的配置文件。现在，<code>disabled key</code>参数将保存在磁盘上的某个位置，除了<code>launchd</code>程序外，其他程序并不可以直接对其进行操作。</p>
+<p> 说点其他的，在配置php on mac的整个过程中，基本上有3个plist文件需要launchctl进行加载或者卸载。分别是<code>homebrew.mxcl.nginx.plist</code>、<code>homebrew.mxcl.php56.plist</code>和<code>homebrew.mxcl.mysql.plist</code>，这三个文件存放的位置位置并不尽相同，nginx.plist存放在<code>/Library/LaunchDaemons/</code>目录下，而php56.plist和mysql.plist则通过软链接到了<code>~/Library/LaunchAgents</code>目录下，并且，nginx.plist文件修改owner为root，而后两者则没有，但是却带了-w参数。关于LaunchDaemon和LaunchAgents的区别，网上有两个篇文章讲解得不错，分别是：</p>
+<pre><code>* [了解LaunchDaemons](http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html)
+* [LaunchDaemons vs LaunchAgents](http://www.grivet-tools.com/blog/2014/launchdaemons-vs-launchagents/)</code></pre></li>
+</ol>
+</li>
+<li><p>控制命令脚本位于 <code>/usr/local/opt/php56/sbin/</code> 下，名称为<code>php56-fpm</code></p>
+</li>
+</ol>
+<p>关于第二点，多说几句。如果你使用bash shell，添加的命令为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH="/usr/local/sbin:$PATH"'</span> &gt;&gt; ~/.bash_profile &amp;&amp; . ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>如果你的ZSH shell，命令是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH="/usr/local/sbin:$PATH"'</span> &gt;&gt; ~/.zshrc &amp;&amp; . ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>如果你也不确定自己用的哪种shell，使用 <code>echo $SHELL</code> 命令查看。</p>
+<h3 id="错误分析"><a href="#错误分析" class="headerlink" title="错误分析"></a>错误分析</h3><h4 id="找不到PHP-FPM的配置文件"><a href="#找不到PHP-FPM的配置文件" class="headerlink" title="找不到PHP-FPM的配置文件"></a>找不到PHP-FPM的配置文件</h4><p>如果运行PHP-FPM提示找不到配置文件，则可以通过 <code>find / | grep php-fpm.conf.default</code>，看看默认文件在哪里，然后CP一个过去。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/<span class="built_in">local</span>/etc/php/5.6/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php/5.6/php-fpm.conf</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php-fpm --fpm-config /usr/<span class="built_in">local</span>/etc/php/5.6/php-fpm.conf <span class="comment">#指定配置文件的位置</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="日志打开错误"><a href="#日志打开错误" class="headerlink" title="日志打开错误"></a>日志打开错误</h4><p>然后，再次手动运行<code>php-fpm</code>，又遇到新的错误。</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[04-Jul-2016 23:22:25]</span> ERROR: failed to open error_log (/usr/local/var/log/php-fpm.log): No such file or directory (<span class="number">2</span>)</span><br><span class="line"><span class="string">[04-Jul-2016 23:22:25]</span> ERROR: failed to post process the configuration</span><br><span class="line"><span class="string">[04-Jul-2016 23:22:25]</span> ERROR: FPM initialization failed</span><br></pre></td></tr></table></figure>
+
+<p>错误信息显示：不能正确的打开”日志”文件，原因是php-fpm在 <code>/usr/local/var/log/</code> 找不到名为<code>php-fpm.log</code>的日志文件。</p>
+<p>打开配置文件，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/<span class="built_in">local</span>/etc/php/5.6/php-fpm.conf</span><br></pre></td></tr></table></figure>
+
+<p>修改文件中 <code>error_log</code> 项，默认前缀是 <code>/usr/var</code>，但并没有这个路径，要修改为 <code>/usr/local/var</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error_log = /usr/local/var/log/php-fpm.log</span><br><span class="line">pid = /usr/local/var/run/php-fpm.pid</span><br></pre></td></tr></table></figure>
+
+<p>或者不修改配置文件中配置项的路径，在php-fpm的运行参数中添加参数prefix，指定放置运行时文件的相对路径前缀</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php-fpm --fpm-config /usr/<span class="built_in">local</span>/etc/php-fpm.conf --prefix /usr/<span class="built_in">local</span>/var</span><br></pre></td></tr></table></figure>
+
+<p>到此，php-fpm守护进程已经基本可以正确的启动了。</p>
+<p>再次运行 <code>php-fpm -v</code>，已经可以成功得到版本号了，5.6.26，GAME OVER.</p>
+<p>如果还不放心，可以通过查看内存中端口号为9000的进程，如果看到了PHP-FPM，则说明确实运行成功了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -Pni4 | grep LISTEN | grep php</span><br></pre></td></tr></table></figure>
+
+<p>或者简单的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i :9000</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php-fpm   <span class="number">35370</span>           root    7u  IPv4 0x7a8545f6d5d08f1d      0t0  TCP <span class="number">127.0.0.1:9000</span> (LISTEN)</span><br><span class="line">php-fpm   <span class="number">35371</span>           _www    0u  IPv4 0x7a8545f6d5d08f1d      0t0  TCP <span class="number">127.0.0.1:9000</span> (LISTEN)</span><br><span class="line">php-fpm   <span class="number">35372</span>           _www    0u  IPv4 0x7a8545f6d5d08f1d      0t0  TCP <span class="number">127.0.0.1:9000</span> (LISTEN)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里提前说一下这个端口9000的问题，我在调试PHP代码的时候使用了xDebug，但是如果按照默认设置的话，经常无法正常调试，后来终于发现是因为xDebug也使用了9000端口，我个人是把XDEBUG的端口修改为了9001才正常的。话说网上的说法是XDEBUG先定义的9000端口，然后PHP-FPM蛮横的也用了9000….</p>
+</blockquote>
+<h2 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure>
+
+<p>设置MySQL随你账户的启动和停止。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/opt/mysql/*.plist ~/Library/LaunchAgents</span><br></pre></td></tr></table></figure>
+
+<p>想手动启动的话，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>mysql -V</code>或者<code>--version</code>查看MySQL版本(注意不要错写成<code>mysql -v</code>因为小写v是–Verbose的缩写，而不是Version的缩写)</p>
+<h3 id="增强Mysql安全性"><a href="#增强Mysql安全性" class="headerlink" title="增强Mysql安全性"></a>增强Mysql安全性</h3><p>为了增强Mysql服务器的安全性，我们可以通过运行 <code>secure_mysql_installation</code> 这个程序，来修改root密码，去掉匿名账户，并且关闭远程root登录权限。</p>
+<p>运行后，会进入下面的设置过程（2016年8月15日更新）：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">Securing the MySQL server deployment.</span><br><span class="line"></span><br><span class="line">Connecting to MySQL using a blank password.</span><br><span class="line"></span><br><span class="line">VALIDATE PASSWORD PLUGIN can be used to test passwords</span><br><span class="line">and improve security. It checks the strength of password</span><br><span class="line">and allows the users to set only those passwords which are</span><br><span class="line">secure enough. Would you like to setup VALIDATE PASSWORD plugin?</span><br><span class="line"></span><br><span class="line">Press y|Y for Yes, any other key for No: #设置一个 VALIDATE PASSWORD 的插件帮你完成任务，选Y</span><br><span class="line"></span><br><span class="line">There are three levels of password validation policy:</span><br><span class="line"></span><br><span class="line">LOW    Length &gt;= <span class="number">8</span></span><br><span class="line">MEDIUM Length &gt;= <span class="number">8</span>, numeric, mixed case, and special characters</span><br><span class="line">STRONG Length &gt;= <span class="number">8</span>, numeric, mixed case, special characters and dictionary file</span><br><span class="line"></span><br><span class="line">Please enter <span class="number">0</span> = LOW, <span class="number">1</span> = MEDIUM and <span class="number">2</span> = STRONG: #我这里选的<span class="number">3</span>，最强的</span><br><span class="line"></span><br><span class="line">New password: #输入密码</span><br><span class="line"></span><br><span class="line">Re-enter new password: #再次输入密码</span><br><span class="line"></span><br><span class="line">Estimated strength of the password: <span class="number">100</span> #显示你设置的密码强度</span><br><span class="line">Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : #认可的话，选择Y继续</span><br><span class="line"></span><br><span class="line">By default, a MySQL installation has an anonymous user,</span><br><span class="line">allowing anyone to log into MySQL without having to have</span><br><span class="line">a user account created for them. This is intended only for</span><br><span class="line">testing, and to make the installation go a bit smoother.</span><br><span class="line">You should remove them before moving into a production</span><br><span class="line">environment.</span><br><span class="line"></span><br><span class="line">Remove anonymous users? (Press y|Y for Yes, any other key for No) : #是否删掉匿名账户，Y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">Normally, root should only be allowed to connect from</span><br><span class="line">'localhost'. This ensures that someone cannot guess at</span><br><span class="line">the root password from the network.</span><br><span class="line"></span><br><span class="line">Disallow root login remotely? (Press y|Y for Yes, any other key for No) : #禁止ROOT账户远程登录，Y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">By default, MySQL comes with a database named 'test' that</span><br><span class="line">anyone can access. This is also intended only for testing,</span><br><span class="line">and should be removed before moving into a production</span><br><span class="line">environment.</span><br><span class="line"></span><br><span class="line">Remove test database and access to it? (Press y|Y for Yes, any other key for No) : #删除测试数据库以及相应的访问权限，Y</span><br><span class="line"> - Dropping test database...</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line"> - Removing privileges on test database...</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">Reloading the privilege tables will ensure that all changes</span><br><span class="line">made so far will take effect immediately.</span><br><span class="line"></span><br><span class="line">Reload privilege tables now? (Press y|Y for Yes, any other key for No) : #重新载入权限以测试上述设置是否成功，Y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">All done!</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试Mysql连接"><a href="#测试Mysql连接" class="headerlink" title="测试Mysql连接"></a>测试Mysql连接</h3><p>命令 <code>mysql -uroot -p</code>，输入刚才设置的密码</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is <span class="number">10</span></span><br><span class="line">Server version: <span class="number">5</span>.<span class="number">7</span>.<span class="number">14</span> Homebrew</span><br><span class="line"></span><br><span class="line">Copyright (c) <span class="number">2000</span>, <span class="number">2016</span>, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure>
+
+<h4 id="如何修改mysql的root账号密码"><a href="#如何修改mysql的root账号密码" class="headerlink" title="如何修改mysql的root账号密码"></a>如何修改mysql的root账号密码</h4><p>使用上面的命令(mysql -uroot -p)进入mysql命令行界面，然后输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set password for &apos;root&apos;@&apos;localhost&apos;=password(&apos;passwd&apos;);</span><br></pre></td></tr></table></figure>
+
+<p>显示结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Query OK, <span class="number">0</span> rows affected, <span class="number">1</span> warning (<span class="number">0</span>.<span class="number">00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>不用担心显示<code>0 rows affected</code>, 密码是改了的，只是需要继续刷新权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>显示结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0</span>.<span class="number">00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>显示的是<code>0 rows affected</code>，别担心，quit推出mysql命令行，然后再次继续的时候，你会发现mysql密码已经修改成了新的密码，旧的密码已经失效。</p>
+<p>好了，简单的说，更新mysql用户的密码，有3种方式</p>
+<ol>
+<li>可以使用 <code>set password for &#39;user_name&#39;@&#39;host_name&#39;=password(&#39;new_pwd&#39;)</code> 方式来修改密码</li>
+<li>可以使用 <code>update</code> 系统表方式，<code>update user set password=password(&#39;passwd&#39;) where user=&#39;user_name&#39;</code><br>注： 对于user表password类，如果不用password函数的话，导致更新后无法登陆。但如果将账户更新为空密码，可以使用加密函数，也可以不使用，2者等同。</li>
+<li>也可以在用户创建后直接使用grant方式来更新用户密码。</li>
+</ol>
+<blockquote>
+<p>注意：对应root密码丢失或需要重置root密码的情形，需要使用系统选项<code>--skip-grant-tables</code>启动服务器后进行重置。</p>
+</blockquote>
+<p>具体可以参考这篇文章：《<a href="http://blog.csdn.net/leshami/article/details/39805839" target="_blank" rel="noopener">MySQL 修改用户密码及重置root密码</a>》</p>
+<h2 id="安装phpMyAdmin"><a href="#安装phpMyAdmin" class="headerlink" title="安装phpMyAdmin"></a>安装phpMyAdmin</h2><h3 id="安装autoconf"><a href="#安装autoconf" class="headerlink" title="安装autoconf"></a>安装autoconf</h3><p>phpMyadmin的安装需要autoconf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install autoconf</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/autoconf-<span class="number">2</span>.<span class="number">69</span>.el_capitan.bottle.<span class="number">4</span>.tar.gz</span><br><span class="line">######################################################################## <span class="number">100</span>.<span class="number">0</span>%</span><br><span class="line">==&gt; Pouring autoconf-<span class="number">2</span>.<span class="number">69</span>.el_capitan.bottle.<span class="number">4</span>.tar.gz</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Emacs Lisp files have been installed to:</span><br><span class="line">  /usr/local/share/emacs/site-lisp/autoconf</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/autoconf/<span class="number">2</span>.<span class="number">69</span>: <span class="number">70</span> files, <span class="number">3</span>.0M</span><br></pre></td></tr></table></figure>
+
+<p>然后设置<code>$PHP_AUTOCONF</code>环境变量</p>
+<p>如果使用默认的bash shell，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'PHP_AUTOCONF="'</span>$(<span class="built_in">which</span> autoconf)<span class="string">'"'</span> &gt;&gt; ~/.bash_profile &amp;&amp; . ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>如果是ZSH shell，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'PHP_AUTOCONF="'</span>$(<span class="built_in">which</span> autoconf)<span class="string">'"'</span> &gt;&gt; ~/.zshrc &amp;&amp; . ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>准备工作完成，开始安装phpMyAdmin</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install phpmyadmin</span><br></pre></td></tr></table></figure>
+
+<p>看看结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Webserver configuration example (add this at the end of</span><br><span class="line">your /etc/apache2/httpd.conf for instance) :</span><br><span class="line">  Alias /phpmyadmin /usr/local/share/phpmyadmin</span><br><span class="line">  &lt;Directory /usr/local/share/phpmyadmin/&gt;</span><br><span class="line">    Options Indexes FollowSymLinks MultiViews</span><br><span class="line">    AllowOverride All</span><br><span class="line">    &lt;IfModule mod_authz_core.c&gt;</span><br><span class="line">      Require all granted</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">    &lt;IfModule !mod_authz_core.c&gt;</span><br><span class="line">      Order allow,deny</span><br><span class="line">      Allow from all</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">  &lt;/Directory&gt;</span><br><span class="line">Then, open http://localhost/phpmyadmin</span><br><span class="line"></span><br><span class="line">More documentation : file:///usr/local/Cellar/phpmyadmin/<span class="number">4</span>.<span class="number">6</span>.<span class="number">2</span>/share/phpmyadmin/doc/</span><br><span class="line"></span><br><span class="line">Configuration has been copied to /usr/local/etc/phpmyadmin.config.inc.php</span><br><span class="line">Don't forget to:</span><br><span class="line">  - change your secret blowfish</span><br><span class="line">  - uncomment the configuration lines (pma, pmapass ...)</span><br><span class="line"></span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/phpmyadmin/<span class="number">4</span>.<span class="number">6</span>.<span class="number">3</span>: <span class="number">2</span>,<span class="number">257</span> files, <span class="number">63</span>.2M, built in <span class="number">5</span> minutes <span class="number">29</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>结果里面的介绍的使用Apache时候的配置方法，使用Nginx呢？直接在你的ngnix需要的地方，link出来一个链接即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/share/phpmyadmin ./phpmyadmin</span><br></pre></td></tr></table></figure>
+
+<p>注意上面需要进入的你的网站的根目录，如果是/var/www，你也可以写完整的路径 <code>ln -s /usr/local/share/phpmyadmin /var/www/phpmyadmin</code></p>
+<h2 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h2><p>命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure>
+
+<p>看结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">The default port has been set in /usr/local/etc/nginx/nginx.conf to <span class="number">8080</span> so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line"></span><br><span class="line">nginx will load all files in /usr/local/etc/nginx/servers/.</span><br><span class="line"></span><br><span class="line">To have launchd start nginx now and restart at login:</span><br><span class="line">  brew services start nginx</span><br><span class="line">Or, if you don t want/need a background service you can just run:</span><br><span class="line">  nginx</span><br></pre></td></tr></table></figure>
+
+<p>就是告诉你nginx默认使用了8080端口，其定义在 <code>/usr/local/etc/nginx/nginx.conf</code> 文件中，这个定义因为端口号大于1024，所以不需要sudo启动，如果需要改为80端口，则需要修改文件Owner为root，这个地方需要注意。后面继续说这个问题。</p>
+<h3 id="Nginx的启动和停止"><a href="#Nginx的启动和停止" class="headerlink" title="Nginx的启动和停止"></a>Nginx的启动和停止</h3><p>如果需要背景运行Nginx，输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew services start nginx</span><br><span class="line">brew services stop nginx</span><br></pre></td></tr></table></figure>
+
+<p>或者直接输入 <code>nginx</code> 命令，前台运行，输入<code>Control+C</code>停止运行。</p>
+<p>运行后，通过测试网页地址 <code>http://127.0.0.1:8080</code> 来看看是否可以看到默认的Nignx页面。</p>
+<p>或者通过运行命令<code>curl -IL http://127.0.0.1:8080</code> 来看看能否读取到页面信息，也可以间接验证Nginx是否正常。</p>
+<h3 id="修改端口为80"><a href="#修改端口为80" class="headerlink" title="修改端口为80"></a>修改端口为80</h3><p>从上面的结果可以看到 Nginx 默认安装在了8080端口，因为一般调试网页默认都是80端口，因此如果需要Nginx使用80端口，需要让Nginx的启动文件加载在root权限下面，也就是说需要将其启动文件从普通用户更改到root用户下(这是因为只有root用户，才可以使用小于1024的端口）。</p>
+<p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 配置文件</p>
+<p>将 <code>listen: 8080</code> 修改为 <code>listen: 80</code> 即可。</p>
+<p>先停止nginx，然后使用启动(命令<code>sudo brew services start nginx</code>测试一下，因为nginx这时候已经成为root用户的执行文件了，启动和停止都需要 <code>sudo</code> 的前缀。</p>
+<h3 id="Nginx自动启动"><a href="#Nginx自动启动" class="headerlink" title="Nginx自动启动"></a>Nginx自动启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/opt/nginx/homebrew.mxcl.nginx.plist /Library/LaunchDaemons/</span><br><span class="line">sudo chown root:wheel /Library/LaunchDaemons/homebrew.mxcl.nginx.plist</span><br><span class="line">sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+
+<p>如果不想Nginx自动启动，使用下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+
+<h3 id="更多nginx-conf设置"><a href="#更多nginx-conf设置" class="headerlink" title="更多nginx.conf设置"></a>更多nginx.conf设置</h3><p>删除默认的 <code>nginx.conf</code> 文件，并且下载我在Github上提供的配置文件。（提醒一下，默认配置文件路径是 <code>/usr/local/etc/nginx/nginx.conf.default</code>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf</span><br><span class="line">curl https://gist.githubusercontent.com/frdmn/7853158/raw/nginx.conf -o /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>新的配置文件力求轻量化，只涉及了worker设置，日志格式/路径等设置，<code>nginx.conf.default</code> 里的其他没用的设置，以及那些被注释掉的废话一律没有。</p>
+<p>配置文件涉及了几个目录和文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">error_log  /usr/local/etc/nginx/logs/error.log</span><br><span class="line">access_log  /usr/local/etc/nginx/logs/access.log</span><br><span class="line">include /usr/local/etc/nginx/sites-enabled/*</span><br></pre></td></tr></table></figure>
+
+<p>手动建立</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/nginx/logs <span class="comment">#访问日志存放目录</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/nginx/sites-available </span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/nginx/sites-enabled</span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/nginx/conf.d <span class="comment">#存放 扩展配置文件 以及 用户配置文件</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/etc/nginx/ssl <span class="comment">#SSL证书以及私钥目录</span></span><br><span class="line">sudo mkdir -p /var/www</span><br><span class="line">sudo chown :staff /var/www</span><br><span class="line">sudo chmod 775 /var/www</span><br></pre></td></tr></table></figure>
+
+<p>这里说一下<code>site-available</code>和<code>sites-enable</code>的区别</p>
+<ol>
+<li><code>sites-available</code> - 配置 虚拟主机（存放配置文件，代表多个虚拟主机的配置）</li>
+<li><code>sites-enabled</code> - 存放 软链接，指向 <code>sites-available</code> 中的配置文件，实际上，nginx 是加载 <code>sites-enabled</code> 下的配置，作为虚拟主机）</li>
+</ol>
+<p>这里稍微多说一下如何配置虚拟多网站访问，首先你要修改<code>/etc</code>下的hosts文件，这个和windows系统下的hosts文件基本原理一样。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	peipei.com</span><br><span class="line">127.0.0.1	xiaowei.com</span><br><span class="line">127.0.0.1	meimei.com</span><br></pre></td></tr></table></figure>
+
+<p>然后，修改 <code>sites-available</code> 目录的 <code>default</code> 文件，添加像下面这样的配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  peipei.com www.peipei.com;</span><br><span class="line">    root       &apos;/Users/wangyi/BitTorrent Sync/Sync Gits/php/peipei.com&apos;;</span><br><span class="line"></span><br><span class="line">    access_log  /usr/local/etc/nginx/logs/default.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include   /usr/local/etc/nginx/conf.d/php-fpm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location = /info &#123;</span><br><span class="line">        allow   127.0.0.1;</span><br><span class="line">        deny    all;</span><br><span class="line">        rewrite (.*) /.info.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page  404     /404.html;</span><br><span class="line">    error_page  403     /403.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  xiaowei.com www.xiaowei.com;</span><br><span class="line">    root       &apos;/Users/wangyi/BitTorrent Sync/Sync Gits/php/xiaowei.com&apos;;</span><br><span class="line"></span><br><span class="line">    access_log  /usr/local/etc/nginx/logs/default.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include   /usr/local/etc/nginx/conf.d/php-fpm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location = /info &#123;</span><br><span class="line">        allow   127.0.0.1;</span><br><span class="line">        deny    all;</span><br><span class="line">        rewrite (.*) /.info.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page  404     /404.html;</span><br><span class="line">    error_page  403     /403.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line">    root       &apos;/var/www&apos;;</span><br><span class="line"></span><br><span class="line">    access_log  /usr/local/etc/nginx/logs/default.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        include   /usr/local/etc/nginx/conf.d/php-fpm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location = /info &#123;</span><br><span class="line">        allow   127.0.0.1;</span><br><span class="line">        deny    all;</span><br><span class="line">        rewrite (.*) /.info.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page  404     /404.html;</span><br><span class="line">    error_page  403     /403.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装xDebug"><a href="#安装xDebug" class="headerlink" title="安装xDebug"></a>安装xDebug</h2><p>命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">brew install &lt;php-version&gt;-xdebug</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">比如，上面咱们安装的是php 5.6，那么这里的命令就可以写成</span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line">brew install php56-xdebug</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Installing homebrew/php/php56-xdebug</span><br><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles-php/php56-xdebug-<span class="number">2</span>.<span class="number">4</span>.<span class="number">1</span>.el_c</span><br><span class="line">######################################################################## <span class="number">100</span>.<span class="number">0</span>%</span><br><span class="line">==&gt; Pouring php56-xdebug-<span class="number">2</span>.<span class="number">4</span>.<span class="number">1</span>.el_capitan.bottle.tar.gz</span><br><span class="line">==&gt; Caveats</span><br><span class="line">To finish installing xdebug for PHP <span class="number">5</span>.<span class="number">6</span>:</span><br><span class="line">  * /usr/local/etc/php/<span class="number">5</span>.<span class="number">6</span>/conf.d/ext-xdebug.ini was created,</span><br><span class="line">    do not forget to remove it upon extension removal.</span><br><span class="line">  * Validate installation via one of the following methods:</span><br><span class="line">  *</span><br><span class="line">  * Using PHP from a webserver:</span><br><span class="line">  * - Restart your webserver.</span><br><span class="line">  * - Write a PHP page that calls <span class="string">"phpinfo();"</span></span><br><span class="line">  * - Load it in a browser and look for the info on the xdebug module.</span><br><span class="line">  * - If you see it, you have been successful!</span><br><span class="line">  *</span><br><span class="line">  * Using PHP from the command line:</span><br><span class="line">  * - Run `php -i <span class="string">"(command-line 'phpinfo()')"</span>`</span><br><span class="line">  * - Look for the info on the xdebug module.</span><br><span class="line">  * - If you see it, you have been successful!</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/php56-xdebug/<span class="number">2</span>.<span class="number">4</span>.<span class="number">1</span>: <span class="number">2</span> files, <span class="number">188</span>.8K</span><br></pre></td></tr></table></figure>
+
+<p>没啥说的，主要就是通过两种方式验证xDebug是否安装成功，一是可以通过查看<code>phpinfo()</code>函数的输出，另外一个则是看<code>php -i</code>，看结果中是否有xDebug的项目即可，有了就OK了。</p>
+<h2 id="网站配置"><a href="#网站配置" class="headerlink" title="网站配置"></a>网站配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl https://gist.githubusercontent.com/frdmn/7853158/raw/php-fpm -o /usr/<span class="built_in">local</span>/etc/nginx/conf.d/php-fpm <span class="comment">#PHP-FPM配置</span></span><br><span class="line">curl https://gist.githubusercontent.com/frdmn/7853158/raw/sites-available_default -o /usr/<span class="built_in">local</span>/etc/nginx/sites-available/default <span class="comment">#虚拟多域名</span></span><br><span class="line">curl https://gist.githubusercontent.com/frdmn/7853158/raw/sites-available_default-ssl -o /usr/<span class="built_in">local</span>/etc/nginx/sites-available/default-ssl <span class="comment">#虚拟多域名</span></span><br><span class="line">curl https://gist.githubusercontent.com/frdmn/7853158/raw/sites-available_phpmyadmin -o /usr/<span class="built_in">local</span>/etc/nginx/sites-available/phpmyadmin <span class="comment">#虚拟多域名</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>git clone</code>命令clone我的虚拟多域名的网站实例（包含403、404以及一个<code>phpinfo()</code>信息页面）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> http://git.frd.mn/frdmn/nginx-virtual-host.git /var/www</span><br><span class="line">rm -rf /var/www/.git <span class="comment">#删掉.git目录</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="SSL网站配置"><a href="#SSL网站配置" class="headerlink" title="SSL网站配置"></a>SSL网站配置</h2><p>使用下列命令，建立一个4096位的RSA钥匙对，以及自签名的证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj <span class="string">"/C=US/ST=State/L=Town/O=Office/CN=localhost"</span> -keyout /usr/<span class="built_in">local</span>/etc/nginx/ssl/localhost.key -out /usr/<span class="built_in">local</span>/etc/nginx/ssl/localhost.crt</span><br><span class="line">openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj <span class="string">"/C=US/ST=State/L=Town/O=Office/CN=phpmyadmin"</span> -keyout /usr/<span class="built_in">local</span>/etc/nginx/ssl/phpmyadmin.key -out /usr/<span class="built_in">local</span>/etc/nginx/ssl/phpmyadmin.crt</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置虚拟多域名（virtual-hosts）"><a href="#设置虚拟多域名（virtual-hosts）" class="headerlink" title="设置虚拟多域名（virtual hosts）"></a>设置虚拟多域名（virtual hosts）</h2><p>在sites-enabled目录中设置软连接，链接到sites-available中的对应目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/<span class="built_in">local</span>/etc/nginx/sites-available/default /usr/<span class="built_in">local</span>/etc/nginx/sites-enabled/default</span><br><span class="line">ln -sfv /usr/<span class="built_in">local</span>/etc/nginx/sites-available/default-ssl /usr/<span class="built_in">local</span>/etc/nginx/sites-enabled/default-ssl</span><br><span class="line">ln -sfv /usr/<span class="built_in">local</span>/etc/nginx/sites-available/phpmyadmin /usr/<span class="built_in">local</span>/etc/nginx/sites-enabled/phpmyadmin</span><br></pre></td></tr></table></figure>
+
+<p>再次设置Nginx自动启动:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist</span><br></pre></td></tr></table></figure>
+
+<h2 id="完毕"><a href="#完毕" class="headerlink" title="完毕"></a>完毕</h2><p>恭喜你，所有设置已经完毕，尽情享受你的环境吧。</p>
+<p>下面是一些虚拟路径以及作用：</p>
+<ul>
+<li><a href="http://localhost" target="_blank" rel="noopener">http://localhost</a>    #”Nginx works” 页面</li>
+<li><a href="http://localhost/info" target="_blank" rel="noopener">http://localhost/info</a>    #phpinfo() 页面</li>
+<li><a href="http://localhost/nope" target="_blank" rel="noopener">http://localhost/nope</a>    #”Not Found” 页面</li>
+<li><a href="https://localhost:443" target="_blank" rel="noopener">https://localhost:443</a>    #”Nginx works” 页面 (SSL)</li>
+<li><a href="https://localhost:443/info" target="_blank" rel="noopener">https://localhost:443/info</a>    #phpinfo() 页面(SSL)</li>
+<li><a href="https://localhost:443/nope" target="_blank" rel="noopener">https://localhost:443/nope</a>    #”Not Found” 页面 (SSL)</li>
+<li><a href="https://localhost:306" target="_blank" rel="noopener">https://localhost:306</a>    #phpMyAdmin (SSL)</li>
+</ul>
+<h2 id="使用别名控制服务"><a href="#使用别名控制服务" class="headerlink" title="使用别名控制服务"></a>使用别名控制服务</h2><p>为了方便的启动PHP相关服务，可以设置下列别名：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">alias nginx.start='sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'</span><br><span class="line">alias nginx.stop='sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'</span><br><span class="line">alias nginx.restart='nginx.stop &amp;&amp; nginx.start'</span><br><span class="line">alias php-fpm.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php56.plist"</span><br><span class="line">alias php-fpm.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.php56.plist"</span><br><span class="line">alias php-fpm.restart='php-fpm.stop &amp;&amp; php-fpm.start'</span><br><span class="line">alias mysql.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist"</span><br><span class="line">alias mysql.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist"</span><br><span class="line">alias mysql.restart='mysql.stop &amp;&amp; mysql.start'</span><br><span class="line">alias nginx.logs.error='tail -250f /usr/local/etc/nginx/logs/error.log'</span><br><span class="line">alias nginx.logs.access='tail -250f /usr/local/etc/nginx/logs/access.log'</span><br><span class="line">alias nginx.logs.default.access='tail -250f /usr/local/etc/nginx/logs/default.access.log'</span><br><span class="line">alias nginx.logs.default-ssl.access='tail -250f /usr/local/etc/nginx/logs/default-ssl.access.log'</span><br><span class="line">alias nginx.logs.phpmyadmin.error='tail -250f /usr/local/etc/nginx/logs/phpmyadmin.error.log'</span><br><span class="line">alias nginx.logs.phpmyadmin.access='tail -250f /usr/local/etc/nginx/logs/phpmyadmin.access.log'</span><br></pre></td></tr></table></figure>
+
+<p>现在你可以使用短小的别名来控制服务的启动和停止了，而不用输入长长的 <code>launchctl</code> 命令:</p>
+<h3 id="Nginx相关的控制命令"><a href="#Nginx相关的控制命令" class="headerlink" title="Nginx相关的控制命令"></a>Nginx相关的控制命令</h3><p>你可以使用下面的命令来启动、停止、重启 Nginx:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nginx.start</span><br><span class="line">nginx.stop</span><br><span class="line">nginx.restart</span><br></pre></td></tr></table></figure>
+
+<p>快速检查错误和查看日志，使用下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nginx.logs.access</span><br><span class="line">nginx.logs.default.access</span><br><span class="line">nginx.logs.phpmyadmin.access</span><br><span class="line">nginx.logs.default-ssl.access</span><br><span class="line">nginx.logs.error</span><br><span class="line">nginx.logs.phpmyadmin.error</span><br></pre></td></tr></table></figure>
+
+<p>检查配置: <code>sudo nginx -t</code></p>
+<p>显示结果</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx: the configuration file /usr/local/etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/local/etc/nginx/nginx.conf test is successful</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-FPM相关的控制命令"><a href="#PHP-FPM相关的控制命令" class="headerlink" title="PHP-FPM相关的控制命令"></a>PHP-FPM相关的控制命令</h3><p>你可以使用下面的命令来启动、停止、重启 PHP-FPM:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php-fpm.start</span><br><span class="line">php-fpm.stop</span><br><span class="line">php-fpm.restart</span><br></pre></td></tr></table></figure>
+
+<p>检查PHP-FPM配置:<code>php-fpm -t</code></p>
+<h3 id="MySQL相关的控制命令"><a href="#MySQL相关的控制命令" class="headerlink" title="MySQL相关的控制命令"></a>MySQL相关的控制命令</h3><p>你可以使用下面的命令来启动、停止、重启 MySQL 服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql.start</span><br><span class="line">mysql.stop</span><br><span class="line">mysql.restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><h3 id="错误-Nginx-‘-emerg-mkdir-“-usr-local-var-run-nginx-client-body-temp”‘"><a href="#错误-Nginx-‘-emerg-mkdir-“-usr-local-var-run-nginx-client-body-temp”‘" class="headerlink" title="错误 Nginx: ‘[emerg] mkdir() “/usr/local/var/run/nginx/client_body_temp”‘"></a>错误 Nginx: ‘[emerg] mkdir() “/usr/local/var/run/nginx/client_body_temp”‘</h3><p>可能的解决办法：升级到至少Yosemite以上的MAC OS版本，然后重新使用Homebrew强制安装nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew reinstall --force nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误PHP-FPM-‘lsof-Pni4-grep-LISTEN-grep-php’-doesn’t-return-anything"><a href="#错误PHP-FPM-‘lsof-Pni4-grep-LISTEN-grep-php’-doesn’t-return-anything" class="headerlink" title="错误PHP-FPM: ‘lsof -Pni4 | grep LISTEN | grep php’ doesn’t return anything"></a>错误PHP-FPM: ‘lsof -Pni4 | grep LISTEN | grep php’ doesn’t return anything</h3><p>可能的解决办法：确保你的系统变量路径设置正确，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> | grep php56</span><br></pre></td></tr></table></figure>
+
+<p>来检查php56是否在系统路径中，如果没有任何返回结果，你需要调整你的 .zshrc/.bash_profile. 文件设置，确保在这个文件末尾，有这样一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$(brew --prefix homebrew/php/php56)</span>/bin:<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-git-‘Could-not-resolve-host-git-frd-mn’"><a href="#错误-git-‘Could-not-resolve-host-git-frd-mn’" class="headerlink" title="错误 git: ‘Could not resolve host: git.frd.mn’"></a>错误 git: ‘Could not resolve host: git.frd.mn’</h3><p>可能的解决办法：这可能是我的服务器的问题，请与我联系。</p>
+<h3 id="错误-curl-‘Failed-to-connect-to-localhost-port-80-Connection-refused’"><a href="#错误-curl-‘Failed-to-connect-to-localhost-port-80-Connection-refused’" class="headerlink" title="错误 curl: ‘Failed to connect to localhost port 80: Connection refused’"></a>错误 curl: ‘Failed to connect to localhost port 80: Connection refused’</h3><p>可能的解决办法：这是一个涉及 IPv6 的问题，问题出在你的Mac电脑的 /etc/hosts 文件。如果想修复这个错误，在hosts文件中，找到 “fe80::1%lo0 localhost” 这一行，并且把他注释掉，或者使用下面的命令一键搞定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">""</span> <span class="string">'s/^fe80\:\:/\#fe80\:\:/g'</span> /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误-brew-‘configure-error-Can-not-find-OpenSSL’s-‘"><a href="#错误-brew-‘configure-error-Can-not-find-OpenSSL’s-‘" class="headerlink" title="错误 brew: ‘configure: error: Can not find OpenSSL’s ‘"></a>错误 brew: ‘configure: error: Can not find OpenSSL’s ‘</h3><p>可能的解决办法：确认Xcode已经安装，并且保证Xcode CLI工具安装并且保持最新版本。</p>
+<h3 id="错误-访问本地网站出现-‘502-bad-gateway’的提示。"><a href="#错误-访问本地网站出现-‘502-bad-gateway’的提示。" class="headerlink" title="错误 访问本地网站出现 ‘502 bad gateway’的提示。"></a>错误 访问本地网站出现 ‘502 bad gateway’的提示。</h3><p>先检查php-fpm是否顺利执行了。</p>
+<h3 id="错误：Mavericks-Compilation-error-while-building-PHP-missing-zlib"><a href="#错误：Mavericks-Compilation-error-while-building-PHP-missing-zlib" class="headerlink" title="错误：Mavericks: Compilation error while building PHP / missing zlib"></a>错误：Mavericks: Compilation error while building PHP / missing zlib</h3><p>可能的解决办法：恢复 <code>/usr/include</code> 目录，输入下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /Applications/Xcode5-DP.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include /usr/include</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://blog.frd.mn/install-nginx-php-fpm-mysql-and-phpmyadmin-on-os-x-mavericks-using-homebrew/" target="_blank" rel="noopener">INSTALL NGINX, PHP AND MYSQL ON OS X</a></li>
+<li><a href="http://blog.csdn.net/leshami/article/details/39805839" target="_blank" rel="noopener">MySQL 修改用户密码及重置root密码</a></li>
+<li><a href="https://xdebug.org/docs/install" target="_blank" rel="noopener">how to install Xdebug on MAC OS X</a></li>
+<li><a href="http://www.ilanni.com/?p=7438" target="_blank" rel="noopener">nginx、php-fpm、mysql用户权限解析</a></li>
+<li><a href="http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html" target="_blank" rel="noopener">了解LaunchDaemons</a></li>
+<li><a href="http://www.grivet-tools.com/blog/2014/launchdaemons-vs-launchagents/" target="_blank" rel="noopener">LaunchDaemons vs LaunchAgents</a></li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.wuliaole.com/2016/07/01/config_nginx_php_and_mysql_on_mac_using_homebrew/" data-id="cjyx47xka00o3isok6zjkurjd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "节约用爱"
+        },
+        "headline": "MAC OS系统使用Homebrew配置NGINX PHP和MYSQL",
+        "image": "http://www.wuliaole.com",
+        "keywords": "mac php homebrew mysql nginx php-fpm",
+        "genre": "折腾",
+        "datePublished": "2016-07-01",
+        "dateCreated": "2016-07-01",
+        "dateModified": "2018-10-11",
+        "url": "http://www.wuliaole.com/2016/07/01/config_nginx_php_and_mysql_on_mac_using_homebrew/",
+        "description": "文章更新
+20160701-初次成文
+20160704-完整配置完成
+20160708-整理小错误，理顺一些不通顺的地方
+20160815-系统升级到了CAPITAN，一些地方重新修改
+20160928-补充PHPMYADMIN的使用注意事项
+20161006-补充xDebug和VSCode的配置内容
+20170218-修改了一些小错误
+20170728-调整Homebrew内容到其他帖子
+
+为什么会有这篇文章MAC OS系统下，全部使用Homebrew来配置NGINX, PHP以及MYSQL的文章并不多，所以自己总结了整个安装过程。本文针对EI CAPITAN或者更高的MAC OS版本。"
+        "wordCount": 3760
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/tinyvane" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="../../../../index.html" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="../../03/how_to_uninstall_nodejs_and_reinstall_with_brew/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            MAC系统下卸载NODE.JS并且使用BREW安装
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="../../../06/24/how_to_add_new_yum_repos_to_centos_rhel/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">如何更新CENTOS/REHL系统的REPO库</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/08/04/the_human_way_of_inserting_pics_in_hexo/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804230940.png)" alt="HEXO插入图片的BT脑回路" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/04/the_human_way_of_inserting_pics_in_hexo/" class="title">HEXO插入图片的BT脑回路</a></p>
+                            <p class="item-date"><time datetime="2019-08-04T06:25:01.000Z" itemprop="datePublished">2019-08-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/08/03/vba_scripts_in_word/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/08/03/vba_scripts_in_word/" class="title">WORD中的VBA操作</a></p>
+                            <p class="item-date"><time datetime="2019-08-03T06:55:17.000Z" itemprop="datePublished">2019-08-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/07/19/how_does_office365_coexist_with_msi_visio_2016/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190804064606.png)" alt="微软即点即用和msi共存的安装方法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/how_does_office365_coexist_with_msi_visio_2016/" class="title">微软即点即用和msi共存的安装方法</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T09:13:03.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/let_windows_mail_office_login_using_shadowsocks/" class="title">20190719-shadowsocks支持windows邮件、OFFICE登陆翻墙</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T05:11:23.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="../../../../2019/07/19/common_used_git_commands/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="../../../../categories/折腾/">折腾</a></p>
+                            <p class="item-title"><a href="../../../../2019/07/19/common_used_git_commands/" class="title">201907199-常用GIT命令和使用场景</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T04:23:57.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/CentOS/">CentOS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/">Hexo</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/基础/">基础</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Linux/">Linux</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/MacOS/">MacOS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/折腾/">折腾</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/效率/">效率</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/日常使用/">日常使用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/">树莓派</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/raspberry/入门/">入门</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/编程/">编程</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2019/07/">七月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/10/">十月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/05/">五月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/08/">八月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/03/">三月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/12/">十二月 2015</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net/">.net</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/net-core/">.net core</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/100m宽带/">100m宽带</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/3D建模/">3D建模</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/404/">404</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/C/">C#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/GPT/">GPT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/IMG/">IMG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/M3-bitlocker-loader/">M3 bitlocker loader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MAC/">MAC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MBR/">MBR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/MarkDown/">MarkDown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/OSX/">OSX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PC/">PC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/PHP/">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/RASPBERRY/">RASPBERRY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Raspberry/">Raspberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Resilio-Sync/">Resilio Sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Sublime-Text-3/">Sublime Text 3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/VSCode/">VSCode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WD/">WD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Winform/">Winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/WordPress/">WordPress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/Xamarin/">Xamarin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/aliyun/">aliyun</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/apple/">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/autocad/">autocad</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bash/">bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bitlocker/">bitlocker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bonjor/">bonjor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bower/">bower</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/brew/">brew</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/bt-sync/">bt sync</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/btsync/">btsync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/c/">c#</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos/">centos</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/centos7/">centos7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/coding-net/">coding.net</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cow/">cow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cp/">cp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/csharp/">csharp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/cygwin/">cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/deploy/">deploy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dotnetcore/">dotnetcore</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/dropbear/">dropbear</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/edge/">edge</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/electon/">electon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/emergency-mode/">emergency mode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ext4/">ext4</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/firewall/">firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/formula/">formula</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ghost/">ghost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/git/">git</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/github/">github</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gz/">gz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hexo/">hexo</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs/">hfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hfs-for-Windows/">hfs for Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/homebrew/">homebrew</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/hook/">hook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ie/">ie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/karabiner/">karabiner</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchagents/">launchagents</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/launchdaemon/">launchdaemon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/linux/">linux</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ln/">ln</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mac/">mac</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/macOS/">macOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mklink/">mklink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mouse/">mouse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/msi/">msi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mv/">mv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ngrok/">ngrok</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/node-js/">node.js</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/npm/">npm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/office/">office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/oh-my-zsh/">oh-my-zsh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openvpn/">openvpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/opernwrt/">opernwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/osx/">osx</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/pc/">pc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/php-fpm/">php-fpm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/progon/">progon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rapsberry/">rapsberry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry/">raspberry</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspberry-pi/">raspberry pi</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/raspbian/">raspbian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/redhat/">redhat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/repo/">repo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resilio-sync/">resilio sync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/resiliosync/">resiliosync</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/responsity/">responsity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rhel/">rhel</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rm/">rm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rpm/">rpm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/rsa/">rsa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/runtime/">runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/screen/">screen</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sdk/">sdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shadowsocks/">shadowsocks</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shell/">shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/shortcuts/">shortcuts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/sketchup/">sketchup</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/socks5/">socks5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/ssh/">ssh</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/symlink/">symlink</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/syncthing/">syncthing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/synergy/">synergy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/tar/">tar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/thinkphp/">thinkphp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/uac/">uac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vba/">vba</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vim/">vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visio/">visio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/visual-studio/">visual studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vpn/">vpn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vs/">vs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/vscode/">vscode</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wifi/">wifi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows/">windows</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows-10/">windows 10</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/windows10/">windows10</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/winform/">winform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wireshark/">wireshark</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/word/">word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/wordpress/">wordpress</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xamarin/">xamarin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xampp/">xampp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/xdebug/">xdebug</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/yum/">yum</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/代码/">代码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/低落/">低落</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/作业/">作业</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光猫/">光猫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/光纤/">光纤</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/共享/">共享</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/内网穿透/">内网穿透</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/分类/">分类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/加密/">加密</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/北京联通/">北京联通</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/升级/">升级</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/华为/">华为</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/单曲循环/">单曲循环</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/博客/">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/双击/">双击</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反向代理/">反向代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/反编译/">反编译</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/右键菜单/">右键菜单</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/同步/">同步</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/启动/">启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/喝酒/">喝酒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/图片/">图片</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/平铺/">平铺</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/开发/">开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/弹幕/">弹幕</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/微信/">微信</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/快捷键/">快捷键</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/截图/">截图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/技巧/">技巧</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/抓包/">抓包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/提速/">提速</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/插件/">插件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/搬瓦工/">搬瓦工</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/斗鱼/">斗鱼</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/日文键盘/">日文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/明月永在/">明月永在</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/最小化/">最小化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/权限/">权限</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/查壳/">查壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/树莓派/">树莓派</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/桌面/">桌面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/水印/">水印</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/永久链接/">永久链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/浏览器/">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/烧录/">烧录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/用户管理/">用户管理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/监听/">监听</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/目录/">目录</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/科学上网/">科学上网</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/移动硬盘/">移动硬盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/窗口/">窗口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/站内链接/">站内链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/系统/">系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/紧急模式/">紧急模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/置顶/">置顶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/脚本/">脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/花生壳/">花生壳</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/英文键盘/">英文键盘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/调试/">调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/赚钱宝/">赚钱宝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/跨平台/">跨平台</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件/">软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/软件使用/">软件使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/辅助工具/">辅助工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/迁移/">迁移</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/远程/">远程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/错误/">错误</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键位/">键位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘/">键盘</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/键盘模拟/">键盘模拟</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/随笔/">随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/音乐/">音乐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/饥荒/">饥荒</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/鼠标/">鼠标</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="../../../../tags/net/" style="font-size: 12px;">.net</a> <a href="../../../../tags/net-core/" style="font-size: 10px;">.net core</a> <a href="../../../../tags/100m宽带/" style="font-size: 10px;">100m宽带</a> <a href="../../../../tags/3D建模/" style="font-size: 10px;">3D建模</a> <a href="../../../../tags/404/" style="font-size: 10px;">404</a> <a href="../../../../tags/C/" style="font-size: 10px;">C#</a> <a href="../../../../tags/FTP/" style="font-size: 10px;">FTP</a> <a href="../../../../tags/GPT/" style="font-size: 10px;">GPT</a> <a href="../../../../tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="../../../../tags/IMG/" style="font-size: 10px;">IMG</a> <a href="../../../../tags/Linux/" style="font-size: 10px;">Linux</a> <a href="../../../../tags/M3-bitlocker-loader/" style="font-size: 10px;">M3 bitlocker loader</a> <a href="../../../../tags/MAC/" style="font-size: 11px;">MAC</a> <a href="../../../../tags/MBR/" style="font-size: 10px;">MBR</a> <a href="../../../../tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="../../../../tags/OSX/" style="font-size: 10px;">OSX</a> <a href="../../../../tags/PC/" style="font-size: 10px;">PC</a> <a href="../../../../tags/PHP/" style="font-size: 10px;">PHP</a> <a href="../../../../tags/RASPBERRY/" style="font-size: 10px;">RASPBERRY</a> <a href="../../../../tags/Raspberry/" style="font-size: 10px;">Raspberry</a> <a href="../../../../tags/Resilio-Sync/" style="font-size: 10px;">Resilio Sync</a> <a href="../../../../tags/Sublime-Text-3/" style="font-size: 10px;">Sublime Text 3</a> <a href="../../../../tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="../../../../tags/Vim/" style="font-size: 10px;">Vim</a> <a href="../../../../tags/Vimium/" style="font-size: 10px;">Vimium</a> <a href="../../../../tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="../../../../tags/WD/" style="font-size: 10px;">WD</a> <a href="../../../../tags/Winform/" style="font-size: 10px;">Winform</a> <a href="../../../../tags/WordPress/" style="font-size: 10px;">WordPress</a> <a href="../../../../tags/Xamarin/" style="font-size: 10px;">Xamarin</a> <a href="../../../../tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="../../../../tags/apache/" style="font-size: 10px;">apache</a> <a href="../../../../tags/apple/" style="font-size: 10px;">apple</a> <a href="../../../../tags/autocad/" style="font-size: 10px;">autocad</a> <a href="../../../../tags/bash/" style="font-size: 10px;">bash</a> <a href="../../../../tags/bitlocker/" style="font-size: 10px;">bitlocker</a> <a href="../../../../tags/bonjor/" style="font-size: 10px;">bonjor</a> <a href="../../../../tags/bower/" style="font-size: 10px;">bower</a> <a href="../../../../tags/brew/" style="font-size: 11px;">brew</a> <a href="../../../../tags/bt-sync/" style="font-size: 11px;">bt sync</a> <a href="../../../../tags/btsync/" style="font-size: 10px;">btsync</a> <a href="../../../../tags/c/" style="font-size: 15px;">c#</a> <a href="../../../../tags/centos/" style="font-size: 18px;">centos</a> <a href="../../../../tags/centos7/" style="font-size: 10px;">centos7</a> <a href="../../../../tags/chrome/" style="font-size: 10px;">chrome</a> <a href="../../../../tags/coding-net/" style="font-size: 10px;">coding.net</a> <a href="../../../../tags/cow/" style="font-size: 10px;">cow</a> <a href="../../../../tags/cp/" style="font-size: 10px;">cp</a> <a href="../../../../tags/cron/" style="font-size: 10px;">cron</a> <a href="../../../../tags/crontab/" style="font-size: 10px;">crontab</a> <a href="../../../../tags/csharp/" style="font-size: 11px;">csharp</a> <a href="../../../../tags/cygwin/" style="font-size: 10px;">cygwin</a> <a href="../../../../tags/deploy/" style="font-size: 10px;">deploy</a> <a href="../../../../tags/dotnetcore/" style="font-size: 10px;">dotnetcore</a> <a href="../../../../tags/dropbear/" style="font-size: 10px;">dropbear</a> <a href="../../../../tags/edge/" style="font-size: 10px;">edge</a> <a href="../../../../tags/electon/" style="font-size: 10px;">electon</a> <a href="../../../../tags/emergency-mode/" style="font-size: 10px;">emergency mode</a> <a href="../../../../tags/ext4/" style="font-size: 10px;">ext4</a> <a href="../../../../tags/firewall/" style="font-size: 10px;">firewall</a> <a href="../../../../tags/formula/" style="font-size: 10px;">formula</a> <a href="../../../../tags/ghost/" style="font-size: 10px;">ghost</a> <a href="../../../../tags/git/" style="font-size: 17px;">git</a> <a href="../../../../tags/github/" style="font-size: 13px;">github</a> <a href="../../../../tags/gz/" style="font-size: 10px;">gz</a> <a href="../../../../tags/hexo/" style="font-size: 19px;">hexo</a> <a href="../../../../tags/hfs/" style="font-size: 10px;">hfs</a> <a href="../../../../tags/hfs-for-Windows/" style="font-size: 10px;">hfs for Windows</a> <a href="../../../../tags/homebrew/" style="font-size: 13px;">homebrew</a> <a href="../../../../tags/hook/" style="font-size: 10px;">hook</a> <a href="../../../../tags/ie/" style="font-size: 10px;">ie</a> <a href="../../../../tags/karabiner/" style="font-size: 10px;">karabiner</a> <a href="../../../../tags/launchagents/" style="font-size: 11px;">launchagents</a> <a href="../../../../tags/launchdaemon/" style="font-size: 10px;">launchdaemon</a> <a href="../../../../tags/linux/" style="font-size: 18px;">linux</a> <a href="../../../../tags/ln/" style="font-size: 10px;">ln</a> <a href="../../../../tags/mac/" style="font-size: 20px;">mac</a> <a href="../../../../tags/macOS/" style="font-size: 10px;">macOS</a> <a href="../../../../tags/mklink/" style="font-size: 10px;">mklink</a> <a href="../../../../tags/mouse/" style="font-size: 10px;">mouse</a> <a href="../../../../tags/msi/" style="font-size: 10px;">msi</a> <a href="../../../../tags/mv/" style="font-size: 10px;">mv</a> <a href="../../../../tags/mysql/" style="font-size: 12px;">mysql</a> <a href="../../../../tags/nginx/" style="font-size: 11px;">nginx</a> <a href="../../../../tags/ngrok/" style="font-size: 10px;">ngrok</a> <a href="../../../../tags/node-js/" style="font-size: 12px;">node.js</a> <a href="../../../../tags/npm/" style="font-size: 12px;">npm</a> <a href="../../../../tags/office/" style="font-size: 10px;">office</a> <a href="../../../../tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="../../../../tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="../../../../tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="../../../../tags/opernwrt/" style="font-size: 10px;">opernwrt</a> <a href="../../../../tags/osx/" style="font-size: 13px;">osx</a> <a href="../../../../tags/pc/" style="font-size: 12px;">pc</a> <a href="../../../../tags/php/" style="font-size: 16px;">php</a> <a href="../../../../tags/php-fpm/" style="font-size: 11px;">php-fpm</a> <a href="../../../../tags/progon/" style="font-size: 10px;">progon</a> <a href="../../../../tags/rapsberry/" style="font-size: 10px;">rapsberry</a> <a href="../../../../tags/raspberry/" style="font-size: 14px;">raspberry</a> <a href="../../../../tags/raspberry-pi/" style="font-size: 13px;">raspberry pi</a> <a href="../../../../tags/raspbian/" style="font-size: 10px;">raspbian</a> <a href="../../../../tags/redhat/" style="font-size: 10px;">redhat</a> <a href="../../../../tags/repo/" style="font-size: 10px;">repo</a> <a href="../../../../tags/resilio-sync/" style="font-size: 10px;">resilio sync</a> <a href="../../../../tags/resiliosync/" style="font-size: 10px;">resiliosync</a> <a href="../../../../tags/responsity/" style="font-size: 10px;">responsity</a> <a href="../../../../tags/rhel/" style="font-size: 11px;">rhel</a> <a href="../../../../tags/rm/" style="font-size: 10px;">rm</a> <a href="../../../../tags/rpm/" style="font-size: 10px;">rpm</a> <a href="../../../../tags/rsa/" style="font-size: 10px;">rsa</a> <a href="../../../../tags/runtime/" style="font-size: 10px;">runtime</a> <a href="../../../../tags/screen/" style="font-size: 10px;">screen</a> <a href="../../../../tags/sdk/" style="font-size: 10px;">sdk</a> <a href="../../../../tags/shadowsocks/" style="font-size: 14px;">shadowsocks</a> <a href="../../../../tags/shell/" style="font-size: 11px;">shell</a> <a href="../../../../tags/shortcuts/" style="font-size: 10px;">shortcuts</a> <a href="../../../../tags/sketchup/" style="font-size: 10px;">sketchup</a> <a href="../../../../tags/socks5/" style="font-size: 10px;">socks5</a> <a href="../../../../tags/ssh/" style="font-size: 11px;">ssh</a> <a href="../../../../tags/symlink/" style="font-size: 10px;">symlink</a> <a href="../../../../tags/syncthing/" style="font-size: 10px;">syncthing</a> <a href="../../../../tags/synergy/" style="font-size: 10px;">synergy</a> <a href="../../../../tags/tar/" style="font-size: 10px;">tar</a> <a href="../../../../tags/thinkphp/" style="font-size: 10px;">thinkphp</a> <a href="../../../../tags/uac/" style="font-size: 10px;">uac</a> <a href="../../../../tags/vba/" style="font-size: 10px;">vba</a> <a href="../../../../tags/vim/" style="font-size: 10px;">vim</a> <a href="../../../../tags/visio/" style="font-size: 10px;">visio</a> <a href="../../../../tags/visual-studio/" style="font-size: 10px;">visual studio</a> <a href="../../../../tags/vpn/" style="font-size: 10px;">vpn</a> <a href="../../../../tags/vs/" style="font-size: 10px;">vs</a> <a href="../../../../tags/vscode/" style="font-size: 13px;">vscode</a> <a href="../../../../tags/wifi/" style="font-size: 10px;">wifi</a> <a href="../../../../tags/windows/" style="font-size: 13px;">windows</a> <a href="../../../../tags/windows-10/" style="font-size: 10px;">windows 10</a> <a href="../../../../tags/windows10/" style="font-size: 11px;">windows10</a> <a href="../../../../tags/winform/" style="font-size: 10px;">winform</a> <a href="../../../../tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="../../../../tags/word/" style="font-size: 10px;">word</a> <a href="../../../../tags/wordpress/" style="font-size: 11px;">wordpress</a> <a href="../../../../tags/xamarin/" style="font-size: 11px;">xamarin</a> <a href="../../../../tags/xampp/" style="font-size: 10px;">xampp</a> <a href="../../../../tags/xdebug/" style="font-size: 10px;">xdebug</a> <a href="../../../../tags/yum/" style="font-size: 11px;">yum</a> <a href="../../../../tags/代码/" style="font-size: 10px;">代码</a> <a href="../../../../tags/低落/" style="font-size: 10px;">低落</a> <a href="../../../../tags/作业/" style="font-size: 10px;">作业</a> <a href="../../../../tags/光猫/" style="font-size: 10px;">光猫</a> <a href="../../../../tags/光纤/" style="font-size: 10px;">光纤</a> <a href="../../../../tags/共享/" style="font-size: 10px;">共享</a> <a href="../../../../tags/内网穿透/" style="font-size: 10px;">内网穿透</a> <a href="../../../../tags/分类/" style="font-size: 10px;">分类</a> <a href="../../../../tags/加密/" style="font-size: 11px;">加密</a> <a href="../../../../tags/北京联通/" style="font-size: 11px;">北京联通</a> <a href="../../../../tags/升级/" style="font-size: 10px;">升级</a> <a href="../../../../tags/华为/" style="font-size: 10px;">华为</a> <a href="../../../../tags/单曲循环/" style="font-size: 10px;">单曲循环</a> <a href="../../../../tags/博客/" style="font-size: 10px;">博客</a> <a href="../../../../tags/双击/" style="font-size: 10px;">双击</a> <a href="../../../../tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="../../../../tags/反编译/" style="font-size: 12px;">反编译</a> <a href="../../../../tags/右键菜单/" style="font-size: 10px;">右键菜单</a> <a href="../../../../tags/同步/" style="font-size: 13px;">同步</a> <a href="../../../../tags/启动/" style="font-size: 10px;">启动</a> <a href="../../../../tags/喝酒/" style="font-size: 10px;">喝酒</a> <a href="../../../../tags/图片/" style="font-size: 10px;">图片</a> <a href="../../../../tags/安装/" style="font-size: 10px;">安装</a> <a href="../../../../tags/平铺/" style="font-size: 10px;">平铺</a> <a href="../../../../tags/开发/" style="font-size: 10px;">开发</a> <a href="../../../../tags/弹幕/" style="font-size: 10px;">弹幕</a> <a href="../../../../tags/微信/" style="font-size: 10px;">微信</a> <a href="../../../../tags/快捷键/" style="font-size: 13px;">快捷键</a> <a href="../../../../tags/截图/" style="font-size: 10px;">截图</a> <a href="../../../../tags/技巧/" style="font-size: 10px;">技巧</a> <a href="../../../../tags/抓包/" style="font-size: 10px;">抓包</a> <a href="../../../../tags/提速/" style="font-size: 10px;">提速</a> <a href="../../../../tags/插件/" style="font-size: 10px;">插件</a> <a href="../../../../tags/搬瓦工/" style="font-size: 10px;">搬瓦工</a> <a href="../../../../tags/斗鱼/" style="font-size: 11px;">斗鱼</a> <a href="../../../../tags/日文键盘/" style="font-size: 10px;">日文键盘</a> <a href="../../../../tags/明月永在/" style="font-size: 10px;">明月永在</a> <a href="../../../../tags/最小化/" style="font-size: 10px;">最小化</a> <a href="../../../../tags/权限/" style="font-size: 10px;">权限</a> <a href="../../../../tags/查壳/" style="font-size: 10px;">查壳</a> <a href="../../../../tags/树莓派/" style="font-size: 18px;">树莓派</a> <a href="../../../../tags/桌面/" style="font-size: 10px;">桌面</a> <a href="../../../../tags/水印/" style="font-size: 10px;">水印</a> <a href="../../../../tags/永久链接/" style="font-size: 10px;">永久链接</a> <a href="../../../../tags/浏览器/" style="font-size: 10px;">浏览器</a> <a href="../../../../tags/游戏/" style="font-size: 10px;">游戏</a> <a href="../../../../tags/烧录/" style="font-size: 10px;">烧录</a> <a href="../../../../tags/用户管理/" style="font-size: 10px;">用户管理</a> <a href="../../../../tags/监听/" style="font-size: 10px;">监听</a> <a href="../../../../tags/目录/" style="font-size: 11px;">目录</a> <a href="../../../../tags/科学上网/" style="font-size: 10px;">科学上网</a> <a href="../../../../tags/移动硬盘/" style="font-size: 10px;">移动硬盘</a> <a href="../../../../tags/窗口/" style="font-size: 10px;">窗口</a> <a href="../../../../tags/站内链接/" style="font-size: 10px;">站内链接</a> <a href="../../../../tags/系统/" style="font-size: 10px;">系统</a> <a href="../../../../tags/紧急模式/" style="font-size: 10px;">紧急模式</a> <a href="../../../../tags/网络/" style="font-size: 10px;">网络</a> <a href="../../../../tags/置顶/" style="font-size: 10px;">置顶</a> <a href="../../../../tags/脚本/" style="font-size: 10px;">脚本</a> <a href="../../../../tags/花生壳/" style="font-size: 10px;">花生壳</a> <a href="../../../../tags/英文键盘/" style="font-size: 10px;">英文键盘</a> <a href="../../../../tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="../../../../tags/调试/" style="font-size: 10px;">调试</a> <a href="../../../../tags/赚钱宝/" style="font-size: 10px;">赚钱宝</a> <a href="../../../../tags/跨平台/" style="font-size: 10px;">跨平台</a> <a href="../../../../tags/软件/" style="font-size: 10px;">软件</a> <a href="../../../../tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="../../../../tags/辅助工具/" style="font-size: 10px;">辅助工具</a> <a href="../../../../tags/迁移/" style="font-size: 10px;">迁移</a> <a href="../../../../tags/远程/" style="font-size: 10px;">远程</a> <a href="../../../../tags/错误/" style="font-size: 10px;">错误</a> <a href="../../../../tags/键位/" style="font-size: 10px;">键位</a> <a href="../../../../tags/键盘/" style="font-size: 11px;">键盘</a> <a href="../../../../tags/键盘模拟/" style="font-size: 10px;">键盘模拟</a> <a href="../../../../tags/防火墙/" style="font-size: 10px;">防火墙</a> <a href="../../../../tags/随笔/" style="font-size: 12px;">随笔</a> <a href="../../../../tags/音乐/" style="font-size: 10px;">音乐</a> <a href="../../../../tags/饥荒/" style="font-size: 10px;">饥荒</a> <a href="../../../../tags/鼠标/" style="font-size: 11px;">鼠标</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://michael728.github.io/">Michael翔</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="../../../../index.html" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 节约用爱</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'leave-us-alone';
+    
+    
+    var disqus_url = 'http://www.wuliaole.com/2016/07/01/config_nginx_php_and_mysql_on_mac_using_homebrew/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="../../../../libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="../../../../libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="../../../../libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="../../../../js/main.js"></script>
+
+    </div>
+</body>
+</html>
