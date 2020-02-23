@@ -75,7 +75,7 @@ theme: hueman
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
 - type: git
-  repo: git@github1:tinyvane/tinyvane.github.io.git
+  repo: git@github:tinyvane/tinyvane.github.io.git
   branch: master
   message: "Github Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 
