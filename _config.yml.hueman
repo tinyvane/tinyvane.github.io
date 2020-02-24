@@ -1,0 +1,77 @@
+# Menus
+menu:
+    Home: /
+    # Delete this row if you don't want categories in your header nav bar
+    Categories:
+    About: /about/index.html
+
+# Customize
+customize:
+    logo:
+        width: 165
+        height: 60
+        url: images/logo-header.png
+    theme_color: '#006bde'
+    highlight: androidstudio
+    sidebar: left # sidebar position, options: left, right
+    thumbnail: true # enable posts thumbnail, options: true, false
+    favicon: # path to favicon
+    social_links: # for more icons, please see http://fontawesome.io/icons/#brand
+        twitter: /
+        facebook: /
+        google-plus: /
+        github: https://github.com/tinyvane
+        weibo: /
+        rss: /
+
+# Widgets
+widgets:
+    - recent_posts
+    - category
+    - archive
+    #- tag
+    - tagcloud
+    - links
+
+# Search
+search:
+    insight: true # you need to install `hexo-generator-json-content` before using Insight Search
+    swiftype: # enter swiftype install key here
+    baidu: false # you need to disable other search engines to use Baidu search, options: true, false
+
+# Comment
+comment:
+    changyan: # enter changyan shortname here
+    yungentie: # enter yungentie shortname here
+    disqus: leave-us-alone
+    duoshuo: # enter duoshuo shortname here
+    youyan: # enter youyan uid here
+    facebook: # enter true to enable
+    isso: # enter the domain name of your own comment isso server eg. comments.example.com
+    
+
+# Share
+share: default # options: jiathis, bdshare, addtoany, default
+
+# Plugins
+plugins:
+    lightgallery: true # options: true, false
+    google_analytics: # enter the tracking ID for your Google Analytics
+    baidu_analytics: 0b9af06e21a88c60dc3deb5b699a3e63 # enter Baidu Analytics hash key
+    justifiedgallery: true # options: true, false
+
+# Miscellaneous
+miscellaneous:
+    open_graph: # see http://ogp.me
+        fb_app_id:
+        fb_admins:
+        twitter_id:
+        google_plus:
+    links:
+        山上: http://3toptop.top/
+        JerrySher's blog: http://blog.jerryzhang.net/
+        Handa: http://www.hyblog.online
+        美丽应用: http://mlapp.cn
+        水番林: http://sfantree.com/
+
+poweredby: true

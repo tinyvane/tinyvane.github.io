@@ -16,7 +16,7 @@ email: tinyvane@gmail.com
 url: http://www.wuliaole.com
 root: /
 permalink: :year/:month/:day/:urlname/
-#permalink: post/:urlname/
+# permalink: post/:urlname/
 # permalink: post/:title/
 permalink_defaults:
 # permalink: :year/:month/:day/:title/
