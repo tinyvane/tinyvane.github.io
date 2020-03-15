@@ -10,6 +10,6 @@ urlname: how_to_drag_crx_plugins_into_chrome
 
 很简单！
 
-“不要用管理员模式运行”CHROME！
+**不要用管理员模式运行”CHROME！**
 
 下面缺少一个截图，但是如何截取右键菜单呢？这又是一个新问题！

@@ -16,6 +16,6 @@ urlname: use_turbotop_to_keep_applications_topmost
 
 软件截图
 
-![fqqc6i7qh1taf2cvlk7g](fqqc6i7qh1taf2cvlk7g.png)
+![fqqc6i7qh1taf2cvlk7g](20151218-使用TurboTop保持Windows窗口保持最前端/fqqc6i7qh1taf2cvlk7g.png)
 
-转载了其他人的文字，当个软件推荐给大家吧。
+转载了其他人的文字，就当给大家推荐个软件吧。

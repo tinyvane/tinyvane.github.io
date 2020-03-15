@@ -10,15 +10,15 @@ urlname: what_need_to_be_done_after_installation_of_wordpress
 
 注意调整xshell里的权限，比如www和ftp账号的
 
-### 调整.htaccess文件
+### 1. 调整.htaccess文件
 
 默认centos下是没有这个文件的
 
-### 安装theme
+### 2. 安装theme
 
 我目前用的d8的，记得要保证theme本身不带什么插件，否则就和自己后来装的容易冲突了，同时换一下logo
 
-### 安装插件
+### 3. 安装插件
 
 删掉hello dolly，启动akimest，api填进去就ok了，安装了高级版本的TinyMCE编辑器，目前除了好用点，没发现其他用处。
 
