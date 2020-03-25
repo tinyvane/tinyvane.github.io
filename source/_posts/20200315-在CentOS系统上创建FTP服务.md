@@ -1,8 +1,7 @@
 ---
 title: 在CentOS系统上创建FTP服务
 categories: 折腾
-tags:
-  - git
+tags: [FTP, CentOS]
 date: 2020-03-15 14:45:55
 urlname: How_to_Create_FTP_service_on_CentOS
 ---
